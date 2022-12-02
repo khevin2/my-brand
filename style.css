@@ -1,0 +1,232 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --blue: #2f80ed;
+  --white-gray: #f2f2f2;
+  --black: #333333;
+  --gray-dark: #4f4f4f;
+}
+
+body {
+  position: relative;
+}
+.border {
+  border: 1px solid black;
+}
+
+.nav {
+  background-color: var(--blue);
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+@media (min-width: 1440px) {
+  .nav {
+    width: 1336px;
+    margin-left: calc(50% - 668px);
+  }
+}
+
+.logo {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 54px;
+  color: var(--white-gray);
+}
+.nav-links {
+  width: 693px;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-links a {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  color: var(--white-gray);
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.main {
+  /* width: 100%; */
+  margin-left: 100px;
+  margin-right: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.social {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: calc(50vh - 120px);
+  bottom: auto;
+  left: 100px;
+  right: auto;
+}
+.main-container {
+  margin-top: 70px;
+  width: 895px;
+  height: 418px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+.main-desc {
+  width: 443px;
+  height: 403px;
+}
+
+.main-img {
+  width: 421px;
+  height: 414px;
+  background: #d9d9d9;
+  border-radius: 10px;
+}
+.mt-3 {
+  margin-top: 24px;
+}
+.names {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 120px;
+  line-height: 120px;
+  display: flex;
+  align-items: center;
+  color: var(--blue);
+}
+.main-desc p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 54px;
+  color: var(--gray-dark);
+}
+
+.main-btn {
+  width: 421px;
+  height: 80px;
+  background: var(--white-gray);
+  border: 2px solid var(--blue);
+  border-radius: 20px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 54px;
+  color: var(--gray-dark);
+  cursor: pointer;
+  margin-top: 10px;
+}
+.main-btn:hover {
+  background-color: var(--blue);
+  color: var(--white-gray);
+}
+
+.footer {
+  position: relative;
+  width: 1000px;
+  height: 80px;
+  margin-left: calc(50% - 500px);
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.footer hr {
+  height: 3px;
+  background-color: var(--blue);
+}
+.footer p {
+  text-align: center;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--black);
+  margin-top: 5px;
+}
+.login {
+  width: 80px;
+  height: 40px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 21px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--blue);
+  color: var(--white-gray);
+  border: none;
+  border-radius: 10px;
+  position: absolute;
+  left: auto;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.login:hover {
+  color: var(--blue);
+  border: 1px dashed var(--blue);
+  background-color: var(--white-gray);
+}
+
+/* About Page */
+
+.about-desc {
+  width: 407px;
+  height: 414px;
+}
+.about-names {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 42px;
+  color: var(--blue);
+}
+
+.about-occupation {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 30px;
+  color: #828282;
+  margin-bottom: 30px;
+}
+
+.about-desc p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.01em;
+  color: var(--gray-dark);
+}
