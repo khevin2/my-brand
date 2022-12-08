@@ -7,16 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyusa | Contacts</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url("./personal.svg"), url("./feedabck.svg");
+            background-position: left bottom, center right;
+            background-repeat: no-repeat, no-repeat;
+        }
+    </style>
 
 </head>
 
 <body>
     <nav class="nav">
         <h3 class="logo">
-            Cyusa Kheven
+            <a href="/">Cyusa Kheven</a>
+
         </h3>
         <div class="nav-links">
-            <a href="/">Home</a>
             <a href="/about.html">About Me</a>
             <a href="/skills.html">Skills</a>
             <a href="/mywork.html">My Work</a>
@@ -24,6 +31,7 @@
             <a href="/contacts.html" class="active">Contact Me</a>
             <a href="/login.html" class="login">Login</a>
         </div>
+        <div class="menu"></div>
     </nav>
     <main class="main">
         <div class="social">
@@ -57,7 +65,60 @@
 
         </div>
         <div class="contacts-container">
+            <div class="form">
+                <div>
+                    <h2>Contact Me</h2>
+                </div>
+                <form action="">
+                    <div class="input">
+                        <label for="names" class="">
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.9998 4.66663C15.2375 4.66663 16.4245 5.15829 17.2997 6.03346C18.1748 6.90863 18.6665 8.09562 18.6665 9.33329C18.6665 10.571 18.1748 11.758 17.2997 12.6331C16.4245 13.5083 15.2375 14 13.9998 14C12.7622 14 11.5752 13.5083 10.7 12.6331C9.82484 11.758 9.33317 10.571 9.33317 9.33329C9.33317 8.09562 9.82484 6.90863 10.7 6.03346C11.5752 5.15829 12.7622 4.66663 13.9998 4.66663ZM13.9998 16.3333C19.1565 16.3333 23.3332 18.4216 23.3332 21V23.3333H4.6665V21C4.6665 18.4216 8.84317 16.3333 13.9998 16.3333Z"
+                                    fill="#2F80ED" />
+                            </svg>
+                        </label>
+                        <input type="text" name="names" id="" placeholder="Names">
+                    </div>
+                    <div class="input">
+                        <label for="email" class="">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M20 8L12 13L4 8V6L12 11L20 6M20 4H4C2.89 4 2 4.89 2 6V18C2 18.5304 2.21071 19.0391 2.58579 19.4142C2.96086 19.7893 3.46957 20 4 20H20C20.5304 20 21.0391 19.7893 21.4142 19.4142C21.7893 19.0391 22 18.5304 22 18V6C22 4.89 21.1 4 20 4Z"
+                                    fill="#2F80ED" />
+                            </svg>
+                        </label>
+                        <input type="email" name="email" id="" placeholder="Email">
+                    </div>
+                    <div class="input">
+                        <label for="subject" class="">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M14.1 9L15 9.9L5.9 19H5V18.1L14.1 9ZM17.7 3C17.5 3 17.2 3.1 17 3.3L15.2 5.1L18.9 8.9L20.7 7C21.1 6.6 21.1 6 20.7 5.6L18.4 3.3C18.2 3.1 17.9 3 17.7 3ZM14.1 6.2L3 17.2V21H6.8L17.8 9.9L14.1 6.2ZM7 2V5H10V7H7V10H5V7H2V5H5V2H7Z"
+                                    fill="#2F80ED" />
+                            </svg>
+                        </label>
+                        <input type="text" name="subject" id="" placeholder="Subject">
+                    </div>
+                    <div class="input" style="height: 90px;">
+                        <label for="message" class="">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M18 14H10.5L12.5 12H18M6 14V11.5L12.88 4.64C13.07 4.45 13.39 4.45 13.59 4.64L15.35 6.41C15.55 6.61 15.55 6.92 15.35 7.12L8.47 14M20 2H4C3.46957 2 2.96086 2.21071 2.58579 2.58579C2.21071 2.96086 2 3.46957 2 4V22L6 18H20C20.5304 18 21.0391 17.7893 21.4142 17.4142C21.7893 17.0391 22 16.5304 22 16V4C22 2.89 21.1 2 20 2Z"
+                                    fill="#2F80ED" />
+                            </svg>
+                        </label>
+                        <textarea type="text" name="message" id="" placeholder="Message"></textarea>
+                    </div>
+                    <button type="button" class="contact-btn">Send</button>
 
+                </form>
+            </div>
+        </div>
 
         </div>
     </main>
