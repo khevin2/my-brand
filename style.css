@@ -579,13 +579,49 @@ body {
   margin-right: 26px;
 }
 /* Menu button */
-.menu {
+.menu,
+.close-btn {
   display: none;
 }
+
 /* Menu button end */
 @media (max-width: 1000px) {
   .nav-links {
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    background-color: var(--blue);
+    color: var(--white-gray);
+    opacity: 0.9;
+    right: 0;
+    left: auto;
+    top: 0;
+    bottom: auto;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 40px;
+    justify-content: flex-start;
+  }
+  .d-none {
     display: none;
+  }
+  .close-btn {
+    display: block;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 36px;
+    color: var(--white-gray);
+    border: 1px solid var(--white-gray);
+    background-color: transparent;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    width: 50%;
+  }
+  .nav-links a {
+    margin-bottom: 20px;
   }
   .menu {
     display: block;
