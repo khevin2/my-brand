@@ -1,3 +1,5 @@
+import Save from "./helpers/save_local.js"
+
 const menu_btn = document.querySelector(".menu")
 menu_btn.addEventListener('click', handleMenu)
 
@@ -18,3 +20,19 @@ function handleClose() {
 const nav_links = document.querySelector('.nav-links')
 nav_links.addEventListener('focusout', handleClose)
 document.querySelector('.close-btn').addEventListener('click', handleClose)
+
+
+// Register form
+const register = document.querySelector("#register-form")
+register.addEventListener('submit', handleRegitserSubmit)
+
+function handleRegitserSubmit(e) {
+    e.preventDefault()
+    const form = new FormData(register)
+    const data = {}
+    for (let [key, value] of form.entries()) {
+        data[key] = value
+    }
+    console.log(data, data.profile)
+    console.log(URL.createObjectURL(data.profile))
+}
