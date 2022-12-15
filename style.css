@@ -500,6 +500,11 @@ body {
   color: var(--white-gray);
   margin-bottom: 42px;
 }
+.form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .input {
   width: 535px;
@@ -555,6 +560,9 @@ body {
   line-height: 27px;
   color: var(--blue);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Login */
@@ -562,6 +570,61 @@ body {
 .form-login {
   width: 556px;
   /* height: 357px; */
+}
+
+.form-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+.form-btn {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+}
+
+.file-input {
+  appearance: menulist-button;
+  text-overflow: ellipsis;
+  white-space: normal;
+  writing-mode: sideways-lr;
+  -webkit-rtl-ordering: none;
+}
+
+.create-file-input {
+  color: transparent;
+  opacity: 1 !important;
+  flex: 1;
+}
+.create-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.create-file-input::before {
+  content: "Profile Image";
+  color: var(--blue);
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9);
+  border-radius: 5px;
+  padding: 10px 20px;
+  outline: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 10pt;
+  width: 100%;
+  height: 100%;
+}
+.create-file-input:hover::before {
+  border-color: var(--blue);
+}
+.create-file-input:active {
+  outline: 0;
+}
+.create-file-input:active::before {
+  background: -webkit-linear-gradient(top, var(--blue), var(--blue));
 }
 
 .input-login {
@@ -579,13 +642,49 @@ body {
   margin-right: 26px;
 }
 /* Menu button */
-.menu {
+.menu,
+.close-btn {
   display: none;
 }
+
 /* Menu button end */
 @media (max-width: 1000px) {
   .nav-links {
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    background-color: var(--blue);
+    color: var(--white-gray);
+    opacity: 0.9;
+    right: 0;
+    left: auto;
+    top: 0;
+    bottom: auto;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 40px;
+    justify-content: flex-start;
+  }
+  .d-none {
     display: none;
+  }
+  .close-btn {
+    display: block;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 36px;
+    color: var(--white-gray);
+    border: 1px solid var(--white-gray);
+    background-color: transparent;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    width: 50%;
+  }
+  .nav-links a {
+    margin-bottom: 20px;
   }
   .menu {
     display: block;
@@ -619,6 +718,7 @@ body {
   }
   .main-img {
     width: 100%;
+    height: auto;
   }
   .main-desc {
     width: 100%;
@@ -765,6 +865,21 @@ body {
   .input {
     width: 90%;
     margin-bottom: 15px;
+  }
+  .contact-btn {
+    width: 90px;
+  }
+  .form-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .form-btn {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
   }
 }
 @media (max-width: 600px) {
