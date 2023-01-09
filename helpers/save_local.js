@@ -52,6 +52,10 @@ function Save() {
         if (users.find(user => user.email == email)) return true
         else return false
     }
+    this.getUserByEmail = function (email) {
+        let users = JSON.parse(this.users)
+        return users.filter(user => user.email == email)[0]
+    }
     this.updateUser = function (user) {
         if (!this.checkUser(user.id)) {
             this.saveUser(user)
