@@ -1,13 +1,8 @@
 function generateID() {
-    let id
-    if (localStorage.id) id = JSON.parse(localStorage.getItem(id))
-    else {
-        localStorage.setItem("id", "1")
-        id = JSON.parse(localStorage.getItem(id))
-    }
-    localStorage.setItem(id, JSON.stringify(id + 1))
-    console.log(id, id + 1)
-    return id
+    let id = localStorage.getItem('id')
+    const newID = JSON.parse(id) + 1
+    localStorage.setItem('id', newID)
+    return newID
 
 }
 export default generateID
