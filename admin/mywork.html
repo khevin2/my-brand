@@ -184,14 +184,16 @@
             </ul>
         </nav>
         <div class="title">
-            <h3>CYUSA / DASHBOARD</h3>
+            <h3>CYUSA / MY WORK</h3>
         </div>
-        <div class="main">
+        <form id="mywork-form" class="main">
 
             <div class="skill-desc" style="width:576px !important; height: 240px;">
                 <div class="skill-img" style="width: 300px;height: 240px;margin-right: 25px;">
                     <img src="" alt="" style="width: auto; height:auto;">
-                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <input type="file" class="d-none" accept="image/*" id="mywork-img" name="myworkimg">
+                    <svg id="mywork-img-btn" width="50" height="50" viewBox="0 0 50 50" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M37.5 27.5H27.5V37.5H22.5V27.5H12.5V22.5H22.5V12.5H27.5V22.5H37.5M25 0C21.717 0 18.4661 0.646644 15.4329 1.90301C12.3998 3.15938 9.64379 5.00087 7.32233 7.32233C2.63392 12.0107 0 18.3696 0 25C0 31.6304 2.63392 37.9893 7.32233 42.6777C9.64379 44.9991 12.3998 46.8406 15.4329 48.097C18.4661 49.3534 21.717 50 25 50C31.6304 50 37.9893 47.3661 42.6777 42.6777C47.3661 37.9893 50 31.6304 50 25C50 21.717 49.3534 18.4661 48.097 15.4329C46.8406 12.3998 44.9991 9.64379 42.6777 7.32233C40.3562 5.00087 37.6002 3.15938 34.5671 1.90301C31.5339 0.646644 28.283 0 25 0Z"
                             fill="#0076BF" />
@@ -199,16 +201,18 @@
                 </div>
                 <div class="skill-details">
                     <p class="skill-details-p">
-                        <span>React JS</span> <span style="margin-left: 28px;"><svg width="27" height="27"
-                                viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <input value="React JS" class="edit-input" name="workname" style="width: 40%;"> <span
+                            style="margin-left: 28px;"><svg width="27" height="27" viewBox="0 0 27 27" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M18.8719 5.39971L23.1 9.62783C23.2781 9.80596 23.2781 10.0966 23.1 10.2747L12.8625 20.5122L8.5125 20.995C7.93125 21.0606 7.43906 20.5685 7.50469 19.9872L7.9875 15.6372L18.225 5.39971C18.4031 5.22158 18.6938 5.22158 18.8719 5.39971ZM26.4656 4.32627L24.1781 2.03877C23.4656 1.32627 22.3078 1.32627 21.5906 2.03877L19.9313 3.69814C19.7531 3.87627 19.7531 4.16689 19.9313 4.34502L24.1594 8.57314C24.3375 8.75127 24.6281 8.75127 24.8063 8.57314L26.4656 6.91377C27.1781 6.19658 27.1781 5.03877 26.4656 4.32627ZM18 17.7278V22.4997H3V7.49971H13.7719C13.9219 7.49971 14.0625 7.43877 14.1703 7.33564L16.0453 5.46064C16.4016 5.10439 16.1484 4.49971 15.6469 4.49971H2.25C1.00781 4.49971 0 5.50752 0 6.74971V23.2497C0 24.4919 1.00781 25.4997 2.25 25.4997H18.75C19.9922 25.4997 21 24.4919 21 23.2497V15.8528C21 15.3513 20.3953 15.1028 20.0391 15.4544L18.1641 17.3294C18.0609 17.4372 18 17.5778 18 17.7278Z"
                                     fill="#0076BF" />
                             </svg></span>
                     </p>
                     <p class="skill-details-2nd-p">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vehicula magna<span
-                            style="margin-left: 8px;"><svg width="27" height="27" viewBox="0 0 27 27" fill="none"
+                        <textarea name="workdesc" class="edit-input" style="font-weight: 300;" id="">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vehicula magna
+                        </textarea>
+                        <span style="margin-left: 8px;"><svg width="27" height="27" viewBox="0 0 27 27" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M18.8719 5.39971L23.1 9.62783C23.2781 9.80596 23.2781 10.0966 23.1 10.2747L12.8625 20.5122L8.5125 20.995C7.93125 21.0606 7.43906 20.5685 7.50469 19.9872L7.9875 15.6372L18.225 5.39971C18.4031 5.22158 18.6938 5.22158 18.8719 5.39971ZM26.4656 4.32627L24.1781 2.03877C23.4656 1.32627 22.3078 1.32627 21.5906 2.03877L19.9313 3.69814C19.7531 3.87627 19.7531 4.16689 19.9313 4.34502L24.1594 8.57314C24.3375 8.75127 24.6281 8.75127 24.8063 8.57314L26.4656 6.91377C27.1781 6.19658 27.1781 5.03877 26.4656 4.32627ZM18 17.7278V22.4997H3V7.49971H13.7719C13.9219 7.49971 14.0625 7.43877 14.1703 7.33564L16.0453 5.46064C16.4016 5.10439 16.1484 4.49971 15.6469 4.49971H2.25C1.00781 4.49971 0 5.50752 0 6.74971V23.2497C0 24.4919 1.00781 25.4997 2.25 25.4997H18.75C19.9922 25.4997 21 24.4919 21 23.2497V15.8528C21 15.3513 20.3953 15.1028 20.0391 15.4544L18.1641 17.3294C18.0609 17.4372 18 17.5778 18 17.7278Z"
@@ -219,29 +223,29 @@
             </div>
             <div class="mywork-inputs">
                 <div class="input input-login" style="margin-bottom: 32px;">
-                    <label for="currentpwd" class="bg-gray">
+                    <label for="link_to_project" class="bg-gray">
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M8.75 8.75H13.75V11.25H8.75C7.75544 11.25 6.80161 11.6451 6.09835 12.3483C5.39509 13.0516 5 14.0054 5 15C5 15.9946 5.39509 16.9484 6.09835 17.6517C6.80161 18.3549 7.75544 18.75 8.75 18.75H13.75V21.25H8.75C7.0924 21.25 5.50269 20.5915 4.33058 19.4194C3.15848 18.2473 2.5 16.6576 2.5 15C2.5 13.3424 3.15848 11.7527 4.33058 10.5806C5.50269 9.40848 7.0924 8.75 8.75 8.75ZM21.25 8.75C22.9076 8.75 24.4973 9.40848 25.6694 10.5806C26.8415 11.7527 27.5 13.3424 27.5 15H25C25 14.0054 24.6049 13.0516 23.9017 12.3483C23.1984 11.6451 22.2446 11.25 21.25 11.25H16.25V8.75H21.25ZM10 13.75H20V16.25H10V13.75ZM21.25 15H23.75V18.75H27.5V21.25H23.75V25H21.25V21.25H17.5V18.75H21.25V15Z"
                                 fill="#2F80ED" />
                         </svg>
                     </label>
-                    <input type="url" name="link_to_project" placeholder="Link to preject">
+                    <input type="url" name="link_to_project" placeholder="Link to preject" id="project-link">
                 </div>
                 <div class="input input-login">
-                    <label for="currentpwd" class="bg-gray">
+                    <label for="frameworks" class="bg-gray">
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M26.25 2.5H3.75C2.375 2.5 1.25 3.625 1.25 5V25C1.25 26.375 2.375 27.5 3.75 27.5H26.25C27.625 27.5 28.75 26.375 28.75 25V5C28.75 3.625 27.625 2.5 26.25 2.5ZM26.25 25H3.75V7.5H26.25V25ZM11.25 10C9.875 10 8.75 11.125 8.75 12.5C8.75 13.875 7.625 15 6.25 15V17.5C7.625 17.5 8.75 18.625 8.75 20C8.75 21.375 9.875 22.5 11.25 22.5H13.75V20H11.25V18.75C11.25 17.375 10.125 16.25 8.75 16.25C10.125 16.25 11.25 15.125 11.25 13.75V12.5H13.75V10M18.75 10C20.125 10 21.25 11.125 21.25 12.5C21.25 13.875 22.375 15 23.75 15V17.5C22.375 17.5 21.25 18.625 21.25 20C21.25 21.375 20.125 22.5 18.75 22.5H16.25V20H18.75V18.75C18.75 17.375 19.875 16.25 21.25 16.25C19.875 16.25 18.75 15.125 18.75 13.75V12.5H16.25V10H18.75Z"
                                 fill="#2F80ED" />
                         </svg>
                     </label>
-                    <input type="text" name="currentpwd" placeholder="Frameworks">
+                    <input type="text" name="frameworks" placeholder="Frameworks">
                 </div>
             </div>
             <button type="submit" class="login" style="margin-top: 50px;">Save</button>
 
-        </div>
+        </form>
         <div class="blogs">
             <div class="popular">
                 <div class="header-underlined">

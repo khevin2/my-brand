@@ -13,10 +13,6 @@
 function Save() {
 
     this.users = localStorage.getItem('users') || '[]'
-    // else {
-    //     localStorage.setItem('users', '[]')
-    //     this.users = localStorage.getItem('users')
-    // }
 
     this.getUsers = function () {
         return JSON.parse(this.users)
@@ -78,7 +74,6 @@ function Save() {
         let users = JSON.parse(this.users)
         let item = users.filter(item => item.id != user.id)
         item.push(newUser)
-        // console.log(item, users)
         this.users = JSON.stringify(item)
         localStorage.setItem('users', this.users)
         return newUser
@@ -98,5 +93,47 @@ export function SaveAbout() {
         if (about.aboutcarier == "") return "Position cannot be empty!"
         if (about.aboutdesc == "") return "Description cannot be empty!"
         localStorage.setItem('about', JSON.stringify(about))
+    }
+}
+
+export function SaveSkills() {
+    this.skills = localStorage.getItem('skills') || '[]'
+
+    this.SaveSkill = function (skill) {
+        if (skill.skillphoto == '') return "Add photo please"
+        if (skill.skillname == '') return "Add Skill name please"
+        if (skill.bannerphoto == '') return 'Add banner please'
+        if (skill.skilldesc == '') return "Add description please"
+        const skills = JSON.parse(localStorage.getItem('skills') || '[]')
+        skills.push(skill)
+        localStorage.setItem('skills', JSON.stringify(skills))
+    }
+    this.getSkill = function (id) {
+        const skills = JSON.parse(localStorage.getItem('skills') || '[]')
+        return skills.filter(skill => skill.id = id)[0] || {}
+    }
+    this.getAllSkills = function () {
+        return JSON.parse(localStorage.getItem('skills') || '[]')
+    }
+}
+
+export function SaveWork() {
+    this.SaveNewWork = function (work) {
+        if (work.myworkimg == '') return "Add photo please"
+        if (work.workname == '') return "Add work name please"
+        if (work.link_to_project == '') return 'Add link to project please'
+        if (work.workdesc == '') return "Add description please"
+        if (work.frameworks == '') return "Add frameworks please"
+        const works = JSON.parse(localStorage.getItem('works') || '[]')
+        works.push(work)
+        localStorage.setItem('skills', JSON.stringify(works))
+    }
+
+    this.getWork = function (id) {
+        const works = JSON.parse(localStorage.getItem('works') || '[]')
+        return works.filter(work => work.id = id)[0] || {}
+    }
+    this.getAllWork = function () {
+        return JSON.parse(localStorage.getItem('works') || '[]')
     }
 }
