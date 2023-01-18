@@ -27,7 +27,7 @@
         </div>
         <div class="menu"></div>
     </nav>
-    <main class="main">
+    <main class="main" id="client-about">
         <div class="social">
             <a href="#"><svg width="30" height="30" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -60,16 +60,17 @@
         </div>
         <div class="main-container">
             <div class="main-img">
-                <img src="./cyusa.JPG" alt="main image of site owner" style="width: 100%; height: 100%;">
+                <img id="client-about-img" src="./cyusa.JPG" alt="main image of site owner"
+                    style="width: 100%; height: 100%;">
             </div>
             <div class="about-desc">
-                <h3 class="about-names">
+                <h3 class="about-names" id="client-about-names">
                     Cyusa Kheven
                 </h3>
-                <h6 class="about-occupation">
+                <h6 class="about-occupation" id="client-about-occupation">
                     Software Engineer and UX Designer
                 </h6>
-                <p>
+                <p id="client-about-desc">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vehicula magna, sed
                     cursus arcu vulputate
                     eget. Suspendisse pharetra purus arcu, nec sodales mi condimentum a. Donec scelerisque, risus nec
@@ -88,6 +89,8 @@
         <!-- <a href="/login.html" class="login">Login</a> -->
     </footer>
     <script src="main.js" type="module"></script>
+    <script src="./helpers/save_local.js" type="module"></script>
+    <script src="./helpers/display_data.js" type="module"></script>
 </body>
 
 </html>

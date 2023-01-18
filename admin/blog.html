@@ -116,7 +116,7 @@
                     </svg>
                     <h4>MY WORK</h4>
                 </li>
-                <li class="link-item">
+                <li class="link-item active">
                     <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_170_905)">
                             <path
@@ -148,7 +148,7 @@
                     </svg>
                     <h4>SOCIAL MEDIA</h4>
                 </li>
-                <li class="link-item active">
+                <li class="link-item">
                     <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_170_905)">
                             <path
@@ -191,7 +191,9 @@
             <div class="blog-top">
                 <div class="blog-img">
                     <img src="" alt="">
-                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <input type="file" accept="image/*" class="d-none" name="blogphoto" id="open-blogphoto-file">
+                    <svg id="blogphoto-btn" width="50" height="50" viewBox="0 0 50 50" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M37.5 27.5H27.5V37.5H22.5V27.5H12.5V22.5H22.5V12.5H27.5V22.5H37.5M25 0C21.717 0 18.4661 0.646644 15.4329 1.90301C12.3998 3.15938 9.64379 5.00087 7.32233 7.32233C2.63392 12.0107 0 18.3696 0 25C0 31.6304 2.63392 37.9893 7.32233 42.6777C9.64379 44.9991 12.3998 46.8406 15.4329 48.097C18.4661 49.3534 21.717 50 25 50C31.6304 50 37.9893 47.3661 42.6777 42.6777C47.3661 37.9893 50 31.6304 50 25C50 21.717 49.3534 18.4661 48.097 15.4329C46.8406 12.3998 44.9991 9.64379 42.6777 7.32233C40.3562 5.00087 37.6002 3.15938 34.5671 1.90301C31.5339 0.646644 28.283 0 25 0Z"
                             fill="#0076BF" />
@@ -199,24 +201,24 @@
                 </div>
                 <div class="blog-inputs">
                     <div class="input input-login" style="margin-bottom: 0px;">
-                        <label for="currentpwd" class="bg-gray width-auto">
+                        <label for="blog-title" class="bg-gray width-auto">
                             Title
                         </label>
-                        <input type="url" name="link_to_project" placeholder="Link to preject">
+                        <input type="text" id="blog-title" name="blogtitle" placeholder="Post title">
                     </div>
                     <div class="input input-login" style="margin-bottom: 0px;">
-                        <label for="currentpwd" class="bg-gray width-auto">
+                        <label for="blog-intro" class="bg-gray width-auto">
                             Intro
                         </label>
-                        <input type="url" name="link_to_project" placeholder="Link to preject">
+                        <input type="text" id="blog-intro" name="blogintro" placeholder="Introduction of post">
                     </div>
                 </div>
             </div>
             <div class="input input-login" style="width: 400px; height: 256px; margin-top: 30px;">
-                <label for="currentpwd" class="bg-gray width-auto" style="align-items: normal; padding-top: 10px;">
+                <label for="blog-body" class="bg-gray width-auto" style="align-items: normal; padding-top: 10px;">
                     Intro
                 </label>
-                <textarea type="url" name="link_to_project" placeholder="Link to preject"
+                <textarea id="blog-body" name="blogbody" placeholder="Type Here(MD)"
                     style="align-items: normal; padding-top: 10px;padding-left: 10px;width: 100%;height: 100%;background-color: #d9d9d9;"></textarea>
             </div>
 

@@ -81,6 +81,15 @@
 .link-item svg {
   margin-right: 20px;
 }
+.link-item a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  text-decoration: none;
+}
 .link-item h4 {
   font-family: "Open Sans";
   font-style: normal;

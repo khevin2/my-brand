@@ -47,14 +47,13 @@ if (login) login.addEventListener('submit', handleLogin)
 function handleLogin(e) {
     e.preventDefault()
     const form = new FormData(login)
-    debugger
     const data = {}
     for (let [key, value] of form.entries()) {
         data[key] = value
     }
     if (db.checkEmail(data.email)) {
         const user = db.getUserByEmail(data.email)
-        console.log("\n", user, "\n", data)
+        // console.log("\n", user, "\n", data)
         if (user.password == data.password) {
             sessionStorage.setItem('email', data.email)
             sessionStorage.setItem('authed', true)

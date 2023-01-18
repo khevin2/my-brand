@@ -110,7 +110,7 @@ export function SaveSkills() {
     }
     this.getSkill = function (id) {
         const skills = JSON.parse(localStorage.getItem('skills') || '[]')
-        return skills.filter(skill => skill.id = id)[0] || {}
+        return skills.filter(skill => skill.id == id)[0] || {}
     }
     this.getAllSkills = function () {
         return JSON.parse(localStorage.getItem('skills') || '[]')
@@ -126,14 +126,34 @@ export function SaveWork() {
         if (work.frameworks == '') return "Add frameworks please"
         const works = JSON.parse(localStorage.getItem('works') || '[]')
         works.push(work)
-        localStorage.setItem('skills', JSON.stringify(works))
+        localStorage.setItem('works', JSON.stringify(works))
     }
 
     this.getWork = function (id) {
         const works = JSON.parse(localStorage.getItem('works') || '[]')
-        return works.filter(work => work.id = id)[0] || {}
+        return works.filter(work => work.id == id)[0] || {}
     }
     this.getAllWork = function () {
         return JSON.parse(localStorage.getItem('works') || '[]')
+    }
+}
+
+export function SaveBlog() {
+    this.saveNewBlog = function (blog) {
+        if (blog.blogphoto == '') return "Photo required please"
+        if (blog.blogtitle == '') return "Title is required"
+        if (blog.blogintro == '') return "Introduction is required"
+        if (blog.blogbody == '') return "The body of post is required"
+        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+        blogs.push(blog)
+        localStorage.setItem('blogs', JSON.stringify(blogs))
+
+    }
+    this.getBlog = function (id) {
+        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+        return blogs.filter(blog => blog.id == id)[0] || {}
+    }
+    this.getAllBlogs = function () {
+        return JSON.parse(localStorage.getItem('blogs') || '[]')
     }
 }

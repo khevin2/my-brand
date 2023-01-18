@@ -1,10 +1,11 @@
 import generateID from "../helpers/generate_id.js"
 import showError from "../helpers/show_error.js"
-import Save, { SaveAbout, SaveSkills, SaveWork } from "../helpers/save_local.js" // Utility to save to localstorage
+import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog } from "../helpers/save_local.js" // Utility to save to localstorage
 const save = new Save() // Initialize the utility
 const aboutsave = new SaveAbout()
 const skillssave = new SaveSkills()
 const worksave = new SaveWork()
+const blogsave = new SaveBlog()
 
 let $email, $id = ''
 if (!sessionStorage.getItem('authed')) window.location = '/login.html'
@@ -27,7 +28,8 @@ function openModal(e) {
 }
 
 const close_btn = document.querySelector('.close')
-close_btn.addEventListener('click', closeModal)
+if (close_btn)
+    close_btn.addEventListener('click', closeModal)
 
 window.addEventListener('click', (e) => {
     if (e.target == modal) closeModal()
@@ -163,5 +165,24 @@ if (myworkform) {
     document.getElementById('mywork-img-btn').addEventListener('click', () => {
         document.getElementById('mywork-img').click()
     })
+}
 
+const blogform = document.getElementById('blog-form')
+if (blogform) {
+    blogform.addEventListener('submit', handleBlogSubmit)
+    function handleBlogSubmit(e) {
+        e.preventDefault()
+        const formData = new FormData(blogform)
+        const data = {}
+        for (let [key, value] of formData.entries()) data[key] = value
+        if (data.blogphoto instanceof File) data.blogphoto = URL.createObjectURL(data.blogphoto)
+        data.id = generateID()
+        const res = blogsave.saveNewBlog(data)
+        if (res == undefined) showError("Saved", blogform)
+        else showError('An error occured! Let\'s give it another shot!', blogform)
+        console.log(data)
+    }
+    document.getElementById('blogphoto-btn').addEventListener('click', () => {
+        document.getElementById('open-blogphoto-file').click()
+    })
 }

@@ -19,6 +19,21 @@ body {
 .active {
   text-decoration: underline !important;
 }
+.h4 {
+  width: 100%;
+  height: 100%;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 33.2014px;
+  line-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #0076bf;
+}
 
 .nav {
   position: fixed;
@@ -302,7 +317,7 @@ body {
 
 .mywork-container {
   width: 754px;
-  height: 261px;
+  /* height: 261px; */
   margin-top: 150px;
   margin-bottom: 80px;
 }
