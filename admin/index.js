@@ -2,6 +2,7 @@ import generateID from "../helpers/generate_id.js"
 import showError from "../helpers/show_error.js"
 import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog } from "../helpers/save_local.js" // Utility to save to localstorage
 import { uploadToFirebase } from "../helpers/firebase_util.js"
+import { validateAbout, validateBlog, validateSkills, validateWork } from "../helpers/validate.js"
 const save = new Save() // Initialize the utility
 const aboutsave = new SaveAbout()
 const skillssave = new SaveSkills()
@@ -107,14 +108,16 @@ if (aboutform) {
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.photo instanceof File) data.photo = uploadToFirebase(data.photo)
+        console.log(data)
+        if (validateAbout(data, aboutform)) return
         aboutsave.saveAbout(data)
         showError("Saved", aboutform)
     }
     const abt = aboutsave.getAbout()
     // document.getElementsByName('aboutphoto')[0].value = abt.aboutphoto
-    document.getElementsByName('aboutnames')[0].value = abt.aboutnames
-    document.getElementsByName('aboutcarier')[0].value = abt.aboutcarier
-    document.getElementsByName('aboutdesc')[0].value = abt.aboutdesc
+    document.getElementsByName('aboutnames')[0].value = abt.aboutnames || ""
+    document.getElementsByName('aboutcarier')[0].value = abt.aboutcarier || ""
+    document.getElementsByName('aboutdesc')[0].value = abt.aboutdesc || ""
 }
 /**
  * Skills Page Functionalities
@@ -132,6 +135,7 @@ if (skillsform) {
         if (data.bannerphoto instanceof File) data.bannerphoto = uploadToFirebase(data.bannerphoto)
         data.id = generateID()
         console.log(data)
+        if (validateSkills(data, skillsform)) return
         skillssave.SaveSkill(data)
         showError("Saved", skillsform)
 
@@ -160,6 +164,7 @@ if (myworkform) {
         if (data.myworkimg instanceof File) data.myworkimg = uploadToFirebase(data.myworkimg)
         data.id = generateID()
         console.log(data)
+        if (validateWork(data, myworkform)) return
         const res = worksave.SaveNewWork(data)
         if (res == undefined) showError("Saved", myworkform)
     }
@@ -178,6 +183,7 @@ if (blogform) {
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.blogphoto instanceof File) data.blogphoto = uploadToFirebase(data.blogphoto)
         data.id = generateID()
+        if (validateBlog(data, blogform)) return
         const res = blogsave.saveNewBlog(data)
         if (res == undefined) showError("Saved", blogform)
         else showError('An error occured! Let\'s give it another shot!', blogform)
