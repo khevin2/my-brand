@@ -70,7 +70,7 @@ if (document.getElementById('cliient-blogs')) {
     const save = new SaveBlog()
     const blogs = save.getAllBlogs()
     let data = ''
-    if (blogs.length <= 0) data = "<h4 class='h4'> Works will appear here..</h4>"
+    if (blogs.length <= 0) data = "<h4 class='h4'> Blogs will appear here..</h4>"
     else
         for (let blog of blogs) {
             data += `<div class="article">

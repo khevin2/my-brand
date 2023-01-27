@@ -1,6 +1,7 @@
 import generateID from "../helpers/generate_id.js"
 import showError from "../helpers/show_error.js"
 import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog } from "../helpers/save_local.js" // Utility to save to localstorage
+import { uploadToFirebase } from "../helpers/firebase_util.js"
 const save = new Save() // Initialize the utility
 const aboutsave = new SaveAbout()
 const skillssave = new SaveSkills()
@@ -51,7 +52,7 @@ function handleAccountForm(e) {
     const data = {}
     for (let [key, value] of form.entries()) data[key] = value
     data.id = $id
-    if (data.profile instanceof File) data.profile = URL.createObjectURL(data.profile)
+    if (data.profile instanceof File) data.profile = uploadToFirebase(data.profile)
     console.log(save.updateUser(data))
     showError("Saved", accountForm)
 
@@ -105,7 +106,7 @@ if (aboutform) {
         const formData = new FormData(aboutform)
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.photo instanceof File) data.photo = URL.createObjectURL(data.photo)
+        if (data.photo instanceof File) data.photo = uploadToFirebase(data.photo)
         aboutsave.saveAbout(data)
         showError("Saved", aboutform)
     }
@@ -127,8 +128,8 @@ if (skillsform) {
         const data = {}
         const formData = new FormData(skillsform)
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.skillphoto instanceof File) data.skillphoto = URL.createObjectURL(data.skillphoto)
-        if (data.bannerphoto instanceof File) data.bannerphoto = URL.createObjectURL(data.bannerphoto)
+        if (data.skillphoto instanceof File) data.skillphoto = uploadToFirebase(data.skillphoto)
+        if (data.bannerphoto instanceof File) data.bannerphoto = uploadToFirebase(data.bannerphoto)
         data.id = generateID()
         console.log(data)
         skillssave.SaveSkill(data)
@@ -156,7 +157,7 @@ if (myworkform) {
         const formData = new FormData(myworkform)
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.myworkimg instanceof File) data.myworkimg = URL.createObjectURL(data.myworkimg)
+        if (data.myworkimg instanceof File) data.myworkimg = uploadToFirebase(data.myworkimg)
         data.id = generateID()
         console.log(data)
         const res = worksave.SaveNewWork(data)
@@ -175,7 +176,7 @@ if (blogform) {
         const formData = new FormData(blogform)
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.blogphoto instanceof File) data.blogphoto = URL.createObjectURL(data.blogphoto)
+        if (data.blogphoto instanceof File) data.blogphoto = uploadToFirebase(data.blogphoto)
         data.id = generateID()
         const res = blogsave.saveNewBlog(data)
         if (res == undefined) showError("Saved", blogform)
