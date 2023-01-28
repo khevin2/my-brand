@@ -156,6 +156,17 @@ export function SaveBlog() {
     this.getAllBlogs = function () {
         return JSON.parse(localStorage.getItem('blogs') || '[]')
     }
+    this.AddLike = function (id) {
+        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+        const [likedBlog] = blogs.filter(blog => blog.id == id)
+        console.log(likedBlog, "\n", likedBlog.likes)
+        debugger
+        likedBlog.likes += 1
+        const filteredBlogs = blogs.filter(blog => blog.id != id)
+        filteredBlogs.push(likedBlog)
+        localStorage.setItem('blogs', JSON.stringify(filteredBlogs))
+        return likedBlog.likes
+    }
 }
 
 export function SaveComment() {
