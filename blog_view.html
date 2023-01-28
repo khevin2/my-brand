@@ -58,14 +58,19 @@
             </a>
 
         </div>
-        <div class="skills-container">
+        <div class="skills-container" id="client-blog-view">
             <img src="./undraw_certificate_re_yadi 1.svg" alt=""
-                style="width: 100%; height: auto; margin-bottom: 20px;">
-            <h4 style="font-weight: 500; height: auto; margin-bottom: 20px;"> thso the tile of a[age</h4>
-            <p style="font-weight: 400;margin-bottom: 30px;">
+                style="width: 100%; height: 250px; margin-bottom: 20px;" id="client-blog-view-img">
+            <h4 style="font-weight: 500; font-size: 42px; font-family: poppins;height: auto; margin-bottom: 20px; color: #2f80ed;"
+                id="client-blog-view-title">
+                thso
+                the tile of a[age
+            </h4>
+            <p style="font-weight: 400;margin-bottom: 30px; font-family: poppins; font-size: 28px;"
+                id="client-blog-view-intro">
                 This is good intprp to an article for publishing
             </p>
-            <p style="font-weight: 300; color: rgb(58, 56, 56); font-family: poppins;">
+            <p style="font-weight: 300; color: rgb(58, 56, 56); font-family: poppins;" id="client-blog-view-body">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis laoreet efficitur. Aenean
                 vel orci maximus,
                 maximus mi id, vestibulum leo. Fusce dui velit, dictum ac tristique vel, accumsan vel risus. Nunc
@@ -110,6 +115,24 @@
                 nec diam
                 laoreet consectetur nec sit amet sem. Nam ligula risus, ornare quis scelerisque sed, ornare eget risus.
             </p>
+            <div class="comments">
+                <h4 class="h4 mb-3">Comments</h4>
+                <div id="comments-container" class="mb-3" style="width: 80%;"></div>
+                <form id="client-comment-form" style="position: relative;">
+                    <div class="input" style="height: 90px;">
+                        <label for="comment" class="">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M18 14H10.5L12.5 12H18M6 14V11.5L12.88 4.64C13.07 4.45 13.39 4.45 13.59 4.64L15.35 6.41C15.55 6.61 15.55 6.92 15.35 7.12L8.47 14M20 2H4C3.46957 2 2.96086 2.21071 2.58579 2.58579C2.21071 2.96086 2 3.46957 2 4V22L6 18H20C20.5304 18 21.0391 17.7893 21.4142 17.4142C21.7893 17.0391 22 16.5304 22 16V4C22 2.89 21.1 2 20 2Z"
+                                    fill="#2F80ED"></path>
+                            </svg>
+                        </label>
+                        <textarea type="text" name="comment" id="comment" placeholder=" Message"></textarea>
+                    </div>
+                    <button type="submit" class="contact-btn">Send</button>
+                </form>
+            </div>
 
 
         </div>

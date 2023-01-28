@@ -1,5 +1,6 @@
-import Save from "./helpers/save_local.js"
+import Save, { SaveComment } from "./helpers/save_local.js"
 import generateID from "./helpers/generate_id.js"
+import showError from "./helpers/show_error.js"
 
 const db = new Save()
 
@@ -63,4 +64,24 @@ function handleLogin(e) {
         else alert("Password Incorect")
     }
     else alert("Email or Password Incorect")
+}
+
+// COMMENTS FORM
+
+const commentsform = document.getElementById('client-comment-form')
+if (commentsform) commentsform.addEventListener('submit', handleCommentSubmit)
+
+function handleCommentSubmit(e) {
+    e.preventDefault()
+    console.log("save comment")
+    const db = new SaveComment()
+    const formData = new FormData(commentsform)
+    const data = {}
+    for (let [key, value] of formData.entries()) data[key] = value
+    if (data.comment == "") return showError("Comment empty..", commentsform)
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const postID = params.get('id')
+    data.postID = postID
+    db.saveNewComment(data)
+    showError("Comment Saved successfully..", commentsform)
 }

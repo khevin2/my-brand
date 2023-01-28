@@ -176,14 +176,14 @@ if (myworkform) {
 const blogform = document.getElementById('blog-form')
 if (blogform) {
     blogform.addEventListener('submit', handleBlogSubmit)
-    function handleBlogSubmit(e) {
+    async function handleBlogSubmit(e) {
         e.preventDefault()
         const formData = new FormData(blogform)
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.blogphoto instanceof File) data.blogphoto = uploadToFirebase(data.blogphoto)
-        data.id = generateID()
+        if (data.blogphoto instanceof File) data.blogphoto = await uploadToFirebase(data.blogphoto)
         if (validateBlog(data, blogform)) return
+        data.id = generateID()
         const res = blogsave.saveNewBlog(data)
         if (res == undefined) showError("Saved", blogform)
         else showError('An error occured! Let\'s give it another shot!', blogform)

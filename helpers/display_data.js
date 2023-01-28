@@ -1,5 +1,4 @@
-import Save from "./save_local.js";
-import { SaveAbout, SaveBlog, SaveSkills, SaveWork } from "./save_local.js";
+import { SaveAbout, SaveBlog, SaveComment, SaveSkills, SaveWork } from "./save_local.js";
 
 if (document.getElementById('client-about')) {
     const about = new SaveAbout()
@@ -66,7 +65,7 @@ if (document.getElementById('client-mywork')) {
         }
     document.getElementById('client-mywork').innerHTML = data
 }
-if (document.getElementById('cliient-blogs')) {
+if (document.getElementById('client-blogs')) {
     const save = new SaveBlog()
     const blogs = save.getAllBlogs()
     let data = ''
@@ -75,12 +74,55 @@ if (document.getElementById('cliient-blogs')) {
         for (let blog of blogs) {
             data += `<div class="article">
                     <div class="article-desc">
-                        <h5>${blog.blogtitle}</h5>
+                        <a href="./blog_view.html?id=${blog.id}"><h5>${blog.blogtitle}</h5></a>
                         <p>${blog.blogintro}</p>
                     </div>
                     <img src="${blog.blogphoto}" alt="Thumbnail of article">
                 </div>`
         }
-    document.getElementById('cliient-blogs').innerHTML = data
+    document.getElementById('client-blogs').innerHTML = data
 }
-if (document.getElementById('')) { }
+if (document.getElementById('client-blog-view')) {
+    const db = new SaveBlog()
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const id = params.get('id')
+    const blog = db.getBlog(id)
+    document.getElementById('client-blog-view-img').src = blog.blogphoto
+    document.getElementById('client-blog-view-title').innerText = blog.blogtitle
+    document.getElementById('client-blog-view-intro').innerText = blog.blogintro
+    document.getElementById('client-blog-view-body').innerText = blog.blogbody
+}
+
+if (document.getElementById('client-popular-blogs')) {
+    const db = new SaveBlog()
+    const blogs = db.getAllBlogs()
+    let html = ''
+    for (let blog of blogs) {
+        const divElement = document.createElement('div')
+        divElement.classList.add('popular-article')
+        const h5 = document.createElement('h5')
+        h5.innerText = blog.blogtitle
+        const p = document.createElement('p')
+        p.innerText = blog.blogintro
+        divElement.append(h5, p)
+        document.getElementById('client-popular-blogs').append(divElement)
+    }
+    console.log('fire')
+}
+
+if (document.getElementById('comments-container')) {
+    const db = new SaveComment()
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const postID = params.get('id')
+    const comments = db.getPostComments(postID)
+
+    for (let comment of comments) {
+        const p = document.createElement('p')
+        p.classList.add("mb-3", "poppins")
+        p.style.padding = '10px'
+        p.style.borderRadius = '5px'
+        p.style.backgroundColor = '#e8e8e8'
+        p.innerText = comment?.comment
+        document.getElementById('comments-container').append(p)
+    }
+}
