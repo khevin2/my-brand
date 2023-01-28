@@ -1,4 +1,4 @@
-import Save, { SaveComment } from "./helpers/save_local.js"
+import Save, { SaveBlog, SaveComment } from "./helpers/save_local.js"
 import generateID from "./helpers/generate_id.js"
 import showError from "./helpers/show_error.js"
 
@@ -84,4 +84,19 @@ function handleCommentSubmit(e) {
     data.postID = postID
     db.saveNewComment(data)
     showError("Comment Saved successfully..", commentsform)
+}
+
+// HANDLE LIKES 
+
+const likeBtn = document.getElementById('client-blog-like')
+if (likeBtn) likeBtn.addEventListener('click', handleLike)
+
+function handleLike(e) {
+    e.preventDefault()
+    const db = new SaveBlog()
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const postID = params.get('id')
+    const likes = db.AddLike(postID)
+    document.getElementById('client-like-color').style.fill = "#2F80ED"
+    document.getElementById('client-blog-like-count').innerText = likes
 }

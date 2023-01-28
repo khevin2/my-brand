@@ -183,6 +183,7 @@ if (blogform) {
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.blogphoto instanceof File) data.blogphoto = await uploadToFirebase(data.blogphoto)
         if (validateBlog(data, blogform)) return
+        data.likes = 0
         data.id = generateID()
         const res = blogsave.saveNewBlog(data)
         if (res == undefined) showError("Saved", blogform)
