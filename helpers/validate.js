@@ -90,6 +90,10 @@ export function validateBlog(data, form) {
         error = true
         showError("Blog title cannot be empty..", form)
     }
+    if (data.blogphoto == undefined || data.blogphoto == 'undefined') {
+        error = true
+        showError("Blog photo cannot be empty..", form)
+    }
     if (data.blogtitle.length < 6) {
         error = true
         showError("Blog title is too short..", form)

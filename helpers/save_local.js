@@ -157,3 +157,16 @@ export function SaveBlog() {
         return JSON.parse(localStorage.getItem('blogs') || '[]')
     }
 }
+
+export function SaveComment() {
+    this.saveNewComment = function (comment) {
+        const comments = JSON.parse(localStorage.getItem('comments') || '[]')
+        comments.push(comment)
+        localStorage.setItem('comments', JSON.stringify(comments))
+    }
+    this.getPostComments = function (postID) {
+        const comments = JSON.parse(localStorage.getItem('comments') || '[]')
+        const postComments = comments.filter(comment => comment.postID == postID)
+        return postComments
+    }
+}

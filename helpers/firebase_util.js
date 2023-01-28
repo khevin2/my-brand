@@ -24,19 +24,17 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const storage = getStorage(app);
 
-export function uploadToFirebase(file) {
+export async function uploadToFirebase(file) {
+    if (!file) throw "Problem with your file.."
     const storageRef = ref(storage, 'mybrand/' + `${new Date().getTime()}-${file.name}`)
-    // const imageName = `${new Date()}-${file.name}`
-    // const meta = { contentType: file.type }
-    // const taskUpload = ref.child(imageName).put(file, meta)
-    uploadBytes(storageRef, file)
-        .then((snapshot) => getDownloadURL(snapshot.ref))
-        .then((url) => {
-            return url
-        })
-        .catch(e => {
-            console.error(e)
-            // showError(e, document.getElementsByTagName(body)[0])
-            return e
-        })
+
+    try {
+        const snapshot = await uploadBytes(storageRef, file)
+        const url = await getDownloadURL(snapshot.ref)
+        return url
+
+    } catch (err) {
+        console.error(err)
+        return err
+    }
 }
