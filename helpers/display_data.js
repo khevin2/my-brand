@@ -42,7 +42,7 @@ if (document.getElementById('client-mywork')) {
                     <h4>${work.workname}</h4>
                     <p>${work.workdesc}</p>
                     <div class="work-row">
-                        <a href="${work.link_to_project}" target="_blank">https://cybersecuritymeetup.rw</a>
+                        <a href="${work.link_to_project}" target="_blank">${work.link_to_project}</a>
                         <span>
                             <!--<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@ if (document.getElementById('client-mywork')) {
                         </span>
                     </div>
                 </div>
-                <img src="${work.myworkimg}" alt="screenshoot of cybersecurity Meetup mobile">
+                <img src="${work.myworkimg}" alt="">
             </div>`
         }
     document.getElementById('client-mywork').innerHTML = data
@@ -164,5 +164,42 @@ if (document.getElementById('skills-form')) {
         document.getElementById('dash-skill-name').value = skillname
         document.getElementById('dash-skill-desc').value = skilldesc
         document.getElementById('dash-skill-banner').src = bannerphoto
+    }
+}
+
+/**
+ * MYWORK LIST IN DASHBOARD
+*/
+
+if (document.getElementById('mywork-list-dashboard')) {
+    const db = new SaveWork()
+    const works = db.getAllWork()
+    let data = ''
+    if (works.length <= 0) data = '<h4 class="h4"> My work will appear here!</h4>'
+    for (let work of works) {
+        data += `<div class="popular-article">
+                    <a href='./mywork.html?id=${work.id}'><h5>${work.workname}</h5></a>
+                    <p>${work.workdesc}</p>
+                </div>`
+    }
+    document.getElementById('mywork-list-dashboard').innerHTML = data
+}
+
+/**
+ * DISPLAY DATA IN MYWORK FORM TO UPDATE
+ */
+
+if (document.getElementById('mywork-form')) {
+    const db = new SaveWork()
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const workID = params.get('id')
+    // debugger
+    if (workID != null) {
+        const { myworkimg, workname, workdesc, frameworks, link_to_project } = db.getWork(workID)
+        document.getElementById('dash-mywork-photo').src = myworkimg
+        document.getElementById('dash-mywork-name').value = workname
+        document.getElementById('dash-mywork-desc').value = workdesc
+        document.getElementById('project-link').value = link_to_project
+        document.getElementById('dash-mywork-frameworks').value = frameworks
     }
 }

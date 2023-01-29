@@ -12,6 +12,7 @@
 
 body {
   position: relative;
+  font-family: "poppins";
 }
 .border {
   border: 1px solid black;
@@ -325,9 +326,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
 }
 .work > img {
-  width: 124px;
+  width: 340px;
   height: 260px;
 }
 
@@ -849,6 +851,7 @@ body {
   .work > img {
     height: 200px;
     width: auto;
+    max-width: 100%;
   }
   .work-desc {
     width: 100%;
