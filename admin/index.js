@@ -165,15 +165,14 @@ if (skillsform) {
 const myworkform = document.getElementById('mywork-form')
 if (myworkform) {
     myworkform.addEventListener('submit', handleMyWork)
-    function handleMyWork(e) {
+    async function handleMyWork(e) {
         e.preventDefault()
         const formData = new FormData(myworkform)
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.myworkimg instanceof File) data.myworkimg = uploadToFirebase(data.myworkimg)
-        data.id = generateID()
-        console.log(data)
+        if (data.myworkimg instanceof File) data.myworkimg = await uploadToFirebase(data.myworkimg)
         if (validateWork(data, myworkform)) return
+        data.id = generateID()
         const res = worksave.SaveNewWork(data)
         if (res == undefined) showError("Saved", myworkform)
     }
