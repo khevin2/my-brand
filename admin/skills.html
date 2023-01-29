@@ -193,7 +193,7 @@
         <form id="skills-form" class="main">
             <div class="skill-desc">
                 <div class="skill-img">
-                    <img src="" alt="">
+                    <img src="" alt="" id="dash-skill-photo">
                     <input type="file" accept="image/*" class="d-none" name="skillphoto" id="open-skillphoto-file">
                     <svg id="open-skillphoto" width="50" height="50" viewBox="0 0 50 50" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -204,7 +204,8 @@
                 </div>
                 <div class="skill-details">
                     <p class="skill-details-p">
-                        <input value="React JS" name="skillname" class="edit-input" type="text" style="width: 40%;" />
+                        <input value="" name="skillname" class="edit-input" type="text" id="dash-skill-name"
+                            style="width: 40%;" placeholder="Skill Name" />
                         <span style="margin-left: 28px;"><svg width="27" height="27" viewBox="0 0 27 27" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -213,8 +214,8 @@
                             </svg></span>
                     </p>
                     <p class="skill-details-2nd-p">
-                        <textarea name="skilldesc" class="edit-input"
-                            style="font-weight: 300;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vehicula magna</textarea>
+                        <textarea name="skilldesc" id="dash-skill-desc" class="edit-input" style="font-weight: 300;"
+                            placeholder="Skill description"></textarea>
                         <span style="margin-left: 8px;"><svg width="27" height="27" viewBox="0 0 27 27" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -226,7 +227,7 @@
             </div>
             <h5 class="skill-header">Banner</h5>
             <div class="skill-banner">
-                <img src="" alt="">
+                <img src="" alt="" id="dash-skill-banner">
                 <input type="file" accept="image/*" class="d-none" name="bannerphoto" id="open-bannerphoto-file">
                 <svg id="open-bannerphoto" width="50" height="50" viewBox="0 0 50 50" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -240,10 +241,13 @@
         <div class="blogs">
             <div class="popular">
                 <div class="header-underlined">
-                    <h1>Popular Articles</h1>
-                    <hr>
+                    <h1>Skills List</h1>
+                    <hr style="width: auto;">
                 </div>
-                <div class="popular-article">
+                <div id="skills-list-dashboard"
+                    style="overflow-y:scroll;display: flex;flex-direction: column; align-items: center;">
+                </div>
+                <!-- <div class="popular-article">
                     <h5>My new Javascript demo on React</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vehicula</p>
                 </div>
@@ -258,13 +262,14 @@
                 <div class="popular-article">
                     <h5>My new Javascript demo on React</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vehicula</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 
     </div>
     <script src="./index.js" type="module"></script>
+    <script src="./../helpers/display_data.js" type="module"></script>
 </body>
 
 </html>

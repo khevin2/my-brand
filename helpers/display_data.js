@@ -91,6 +91,8 @@ if (document.getElementById('client-blog-view')) {
     document.getElementById('client-blog-view-title').innerText = blog.blogtitle
     document.getElementById('client-blog-view-intro').innerText = blog.blogintro
     document.getElementById('client-blog-view-body').innerText = blog.blogbody
+    document.title = blog.blogtitle
+
 }
 
 if (document.getElementById('client-popular-blogs')) {
@@ -109,7 +111,9 @@ if (document.getElementById('client-popular-blogs')) {
     }
     console.log('fire')
 }
-
+/**
+ * COMMENTS ON BLOG_VIEW
+ */
 if (document.getElementById('comments-container')) {
     const db = new SaveComment()
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
@@ -124,5 +128,41 @@ if (document.getElementById('comments-container')) {
         p.style.backgroundColor = '#e8e8e8'
         p.innerText = comment?.comment
         document.getElementById('comments-container').append(p)
+    }
+}
+
+/**
+ * SKILLS LIST IN DASHBOARD
+ */
+
+if (document.getElementById('skills-list-dashboard')) {
+    const db = new SaveSkills()
+    const skills = db.getAllSkills()
+    let data = ''
+    if (skills.length <= 0) data = '<h4 class="h4"> Skills will appear here!</h4>'
+    for (let skill of skills) {
+        data += `<div class="popular-article">
+                    <a href='./skills.html?id=${skill.id}'><h5>${skill.skillname}</h5></a>
+                    <p>${skill.skilldesc}</p>
+                </div>`
+    }
+    document.getElementById('skills-list-dashboard').innerHTML = data
+}
+
+/**
+ * DISPLAY DATA IN SKILLS FORM TO UPDATE
+ */
+
+if (document.getElementById('skills-form')) {
+    const db = new SaveSkills()
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const skillID = params.get('id')
+    // debugger
+    if (skillID != null) {
+        const { skilldesc, skillname, skillphoto, bannerphoto } = db.getSkill(skillID)
+        document.getElementById('dash-skill-photo').src = skillphoto
+        document.getElementById('dash-skill-name').value = skillname
+        document.getElementById('dash-skill-desc').value = skilldesc
+        document.getElementById('dash-skill-banner').src = bannerphoto
     }
 }
