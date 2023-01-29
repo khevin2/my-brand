@@ -125,19 +125,28 @@ if (aboutform) {
 const skillsform = document.getElementById('skills-form')
 if (skillsform) {
     skillsform.addEventListener('submit', handleSkillsSubmit)
-    function handleSkillsSubmit(e) {
+    async function handleSkillsSubmit(e) {
         console.log('skills saving')
         e.preventDefault()
         const data = {}
         const formData = new FormData(skillsform)
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.skillphoto instanceof File) data.skillphoto = uploadToFirebase(data.skillphoto)
-        if (data.bannerphoto instanceof File) data.bannerphoto = uploadToFirebase(data.bannerphoto)
-        data.id = generateID()
+        if (data.skillphoto instanceof File) data.skillphoto = await uploadToFirebase(data.skillphoto)
+        if (data.bannerphoto instanceof File) data.bannerphoto = await uploadToFirebase(data.bannerphoto)
+        debugger
         console.log(data)
         if (validateSkills(data, skillsform)) return
-        skillssave.SaveSkill(data)
-        showError("Saved", skillsform)
+        const params = new URLSearchParams(window.location.search) // Get parameters from search params
+        const skillID = params.get('id')
+        if (skillID) {
+            skillssave.updateSkill(skillID, data)
+            showError("Saved", skillsform)
+        } else {
+            data.id = generateID()
+            skillssave.SaveSkill(data)
+            showError("Saved", skillsform)
+        }
+        skillsform.reset()
 
     }
     document.getElementById('open-skillphoto').addEventListener('click', () => {

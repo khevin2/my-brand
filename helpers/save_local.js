@@ -115,6 +115,13 @@ export function SaveSkills() {
     this.getAllSkills = function () {
         return JSON.parse(localStorage.getItem('skills') || '[]')
     }
+    this.updateSkill = function (id, object) {
+        const skills = JSON.parse(localStorage.getItem('skills') || '[]')
+        const index = skills.findIndex(skill => skill.id == id)
+        skills[index]
+        Object.assign(skills[index], object)
+        localStorage.setItem('skills', JSON.stringify(skills))
+    }
 }
 
 export function SaveWork() {
