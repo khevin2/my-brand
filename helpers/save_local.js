@@ -118,7 +118,6 @@ export function SaveSkills() {
     this.updateSkill = function (id, object) {
         const skills = JSON.parse(localStorage.getItem('skills') || '[]')
         const index = skills.findIndex(skill => skill.id == id)
-        skills[index]
         Object.assign(skills[index], object)
         localStorage.setItem('skills', JSON.stringify(skills))
     }
@@ -142,6 +141,12 @@ export function SaveWork() {
     }
     this.getAllWork = function () {
         return JSON.parse(localStorage.getItem('works') || '[]')
+    }
+    this.updateWork = function (id, object) {
+        const works = JSON.parse(localStorage.getItem('works') || '[]')
+        const index = works.findIndex(work => work.id == id)
+        Object.assign(works[index], object)
+        localStorage.setItem('works', JSON.stringify(works))
     }
 }
 
@@ -173,6 +178,17 @@ export function SaveBlog() {
         filteredBlogs.push(likedBlog)
         localStorage.setItem('blogs', JSON.stringify(filteredBlogs))
         return likedBlog.likes
+    }
+    this.updateBlog = function (id, object) {
+        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+        const index = blogs.findIndex(blog => blog.id == id)
+        Object.assign(blogs[index], object)
+        localStorage.setItem('blogs', JSON.stringify(blogs))
+    }
+    this.deleteBlog = function (id) {
+        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+        const newBlogs = blogs.filter(blog => blog.id != id)
+        localStorage.setItem('blogs', JSON.stringify(newBlogs))
     }
 }
 

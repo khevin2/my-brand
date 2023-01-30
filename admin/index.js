@@ -172,9 +172,17 @@ if (myworkform) {
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.myworkimg instanceof File) data.myworkimg = await uploadToFirebase(data.myworkimg)
         if (validateWork(data, myworkform)) return
-        data.id = generateID()
-        const res = worksave.SaveNewWork(data)
-        if (res == undefined) showError("Saved", myworkform)
+        const params = new URLSearchParams(window.location.search) // Get parameters from search params
+        const workID = params.get('id')
+        if (workID) {
+            worksave.updateWork(workID, data)
+            showError("Saved", myworkform)
+        } else {
+            data.id = generateID()
+            const res = worksave.SaveNewWork(data)
+            if (res == undefined) showError("Saved", myworkform)
+        }
+        myworkform.reset()
     }
     document.getElementById('mywork-img-btn').addEventListener('click', () => {
         document.getElementById('mywork-img').click()
@@ -191,14 +199,32 @@ if (blogform) {
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.blogphoto instanceof File) data.blogphoto = await uploadToFirebase(data.blogphoto)
         if (validateBlog(data, blogform)) return
-        data.likes = 0
-        data.id = generateID()
-        const res = blogsave.saveNewBlog(data)
-        if (res == undefined) showError("Saved", blogform)
-        else showError('An error occured! Let\'s give it another shot!', blogform)
-        console.log(data)
+        const params = new URLSearchParams(window.location.search)
+        const blogID = params.get('id')
+        if (blogID) {
+            blogsave.updateBlog(blogID, data)
+            showError('Saved', blogform)
+        } else {
+            data.likes = 0
+            data.id = generateID()
+            const res = blogsave.saveNewBlog(data)
+            if (res == undefined) showError("Saved", blogform)
+            else showError('An error occured! Let\'s give it another shot!', blogform)
+        }
+        blogform.reset()
     }
     document.getElementById('blogphoto-btn').addEventListener('click', () => {
         document.getElementById('open-blogphoto-file').click()
+    })
+}
+
+// DELETE A BLOG
+if (document.getElementById('dash-blog-delete')) {
+    document.getElementById('dash-blog-delete').addEventListener('click', () => {
+        console.log('delete start')
+        const params = new URLSearchParams(window.location.search)
+        const blogID = params.get('id')
+        blogsave.deleteBlog(blogID)
+        window.location = './blog.html'
     })
 }
