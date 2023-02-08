@@ -1,50 +1,50 @@
 /* 
   USER EXAMPLE
 {
-    id: 1,
     names: "cyusa kheven",
-    age: "27/05/2005",
+    dob: "27/05/2005",
     email: "cyusa.kheven@outlook.com",
     password: "123456",
+    phone: "0783903252",
     profile: "https://picsum.photos/200/200"
 }
 */
 
+import { fetchData } from "./backend_hepler.js"
+
+
+
+// console.log((await fetchData("/posts", "get")))
+
+
+
 function Save() {
 
-    this.users = localStorage.getItem('users') || '[]'
-
-    this.getUsers = function () {
-        return JSON.parse(this.users)
+    this.getUsers = async function () {
+        const { data } = await fetchData('/users', 'get')
+        return data
     }
-    this.saveUser = function (user) {
-        if (this.checkUser(user.id)) return `User with ${user.id} already exists.`
+    this.saveUser = async function (user) {
         if (this.checkEmail(user.email)) return `User with ${user.email} already exists.`
-        const users = JSON.parse(this.users)
-        users.push(user)
-        this.users = JSON.stringify(users)
-        localStorage.setItem('users', this.users)
-        return JSON.parse(this.users)
+        const { message, data } = await fetchData('/users', 'post', user)
+        if (message == 'success') return data
+        else return message
     }
-    this.getUser = function (id) {
-        let users = JSON.parse(this.users)
-        return users.filter(user => user.id == id)[0]
+    this.getUser = async function (id) {
+        const { message, data } = await fetchData(`/users/${id}`, 'get')
+        if (message == 'success') return data
+        else return message
     }
-    this.deleteUser = function (id) {
-        let users = JSON.parse(this.users)
-        this.users = JSON.stringify(users.filter(user => user.id != id))
-        localStorage.setItem('users', this.users)
-        return JSON.parse(this.users)
+    this.deleteUser = async function (id) {
+        const { message, data } = await fetchData(`/users/${id}`, 'delete')
+        if (message == 'success') return 'Deleted'
     }
-    this.checkUser = function (id) {
-        let users = JSON.parse(this.users)
-        if (users.find(user => user.id == id)) return true
-        else return false
+    this.checkUser = async function (id) {
+        return (await this.getUser(id)).email ? true : false
     }
-    this.checkEmail = function (email) {
-        let users = JSON.parse(this.users)
-        if (users.find(user => user.email == email)) return true
-        else return false
+    this.checkEmail = async function (email) {
+        const { message } = await fetchData(`/users/email?email=${email}`, 'get')
+        return message == "success" ? true : false
     }
     this.checkPassword = function (id, password) {
         let users = JSON.parse(this.users)
@@ -53,30 +53,26 @@ function Save() {
         }
         else return false
     }
-    this.getUserByEmail = function (email) {
-        let users = JSON.parse(this.users)
-        return users.filter(user => user.email == email)[0]
+    this.getUserByEmail = async function (email) {
+        const { message, data } = await fetchData(`/users/email?email=${email}`, 'get')
+        if (message == 'success') return data
+        else return message
+
     }
-    this.updateUser = function (user) {
-        if (!this.checkUser(user.id)) {
-            this.saveUser(user)
-            return
+    this.updateUser = async function (id, user) {
+        const { message, data, error } = await fetchData(`/users/${id}`, 'PATCH', user)
+        console.log(message, error, user)
+        if (message == 'success') return data
+        else return message
+    }
+    this.login = async function (data) {
+        const res = await fetchData(`/login`, 'post', data)
+        if (res.message == 'success') {
+            sessionStorage.setItem("token", res.token)
+            sessionStorage.setItem('email', data.email)
+            return true
         }
-        const userToUpdate = this.getUser(user.id)
-        const newUser = {
-            id: userToUpdate.id,
-            names: user.names || userToUpdate.names,
-            age: user.age || userToUpdate.age,
-            email: user.email || userToUpdate.email,
-            password: user.password || userToUpdate.password,
-            profile: user.profile || userToUpdate.profile
-        }
-        let users = JSON.parse(this.users)
-        let item = users.filter(item => item.id != user.id)
-        item.push(newUser)
-        this.users = JSON.stringify(item)
-        localStorage.setItem('users', this.users)
-        return newUser
+        return false
     }
 }
 
@@ -151,56 +147,70 @@ export function SaveWork() {
 }
 
 export function SaveBlog() {
-    this.saveNewBlog = function (blog) {
-        if (blog.blogphoto == '') return "Photo required please"
-        if (blog.blogtitle == '') return "Title is required"
-        if (blog.blogintro == '') return "Introduction is required"
-        if (blog.blogbody == '') return "The body of post is required"
-        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
-        blogs.push(blog)
-        localStorage.setItem('blogs', JSON.stringify(blogs))
+    this.saveNewBlog = async function (blog) {
+
+        const blogdata = {}
+        blogdata.title = blog.blogtitle
+        blogdata.intro = blog.blogintro
+        blogdata.body = blog.blogbody
+        blogdata.tags = blog.tags
+        blogdata.photo = blog.blogphoto
+
+        const { error, message, data } = await fetchData('/posts', 'POST', blogdata)
+        if (error) return `${message} - ${error}`
+        else return data
 
     }
-    this.getBlog = function (id) {
-        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
-        return blogs.filter(blog => blog.id == id)[0] || {}
+    this.getBlog = async function (id) {
+        const { error, message, data } = await fetchData(`/posts/${id}`, 'GET')
+        if (error) return message
+        else return data
+
     }
-    this.getAllBlogs = function () {
-        return JSON.parse(localStorage.getItem('blogs') || '[]')
+    this.getAllBlogs = async function () {
+        const { error, message, data } = await fetchData(`/posts`, 'GET')
+        if (error) return message
+        else return data
+        // Return an array
     }
-    this.AddLike = function (id) {
-        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
-        const [likedBlog] = blogs.filter(blog => blog.id == id)
-        console.log(likedBlog, "\n", likedBlog.likes)
-        debugger
-        likedBlog.likes += 1
-        const filteredBlogs = blogs.filter(blog => blog.id != id)
-        filteredBlogs.push(likedBlog)
-        localStorage.setItem('blogs', JSON.stringify(filteredBlogs))
-        return likedBlog.likes
+    this.AddLike = async function (id) {
+        const { error, message, data } = await fetchData(`/posts/${id}/like`, 'POST')
+        if (error) return message
+        else return data
+        // return blog likes
     }
-    this.updateBlog = function (id, object) {
-        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
-        const index = blogs.findIndex(blog => blog.id == id)
-        Object.assign(blogs[index], object)
-        localStorage.setItem('blogs', JSON.stringify(blogs))
+    this.updateBlog = async function (id, object) {
+        const blogdata = {}
+        blogdata.title = object.blogtitle
+        blogdata.intro = object.blogintro
+        blogdata.body = object.blogbody
+        blogdata.tags = object.tags
+        blogdata.photo = object.blogphoto
+        const { error, message, data } = await fetchData(`/posts/${id}`, 'PATCH', blogdata)
+        console.log(error, message, data)
+        if (error) return { isErr: true, message, error }
+        else return { data, message, isErr: false }
     }
-    this.deleteBlog = function (id) {
-        const blogs = JSON.parse(localStorage.getItem('blogs') || '[]')
-        const newBlogs = blogs.filter(blog => blog.id != id)
-        localStorage.setItem('blogs', JSON.stringify(newBlogs))
+
+    this.deleteBlog = async function (id) {
+        const { error, message, data } = await fetchData(`/posts/${id}`, 'DELETE')
+        if (error) return message
+        else return data
+        // return data.acknowledged: true
+
     }
 }
 
 export function SaveComment() {
-    this.saveNewComment = function (comment) {
-        const comments = JSON.parse(localStorage.getItem('comments') || '[]')
-        comments.push(comment)
-        localStorage.setItem('comments', JSON.stringify(comments))
+    this.saveNewComment = async function (id, comment) {
+        const { error, data, message } = await fetchData(`/posts/${id}/comment`, "POST", comment)
+        if (error) return error
+        else return data
     }
-    this.getPostComments = function (postID) {
-        const comments = JSON.parse(localStorage.getItem('comments') || '[]')
-        const postComments = comments.filter(comment => comment.postID == postID)
-        return postComments
+    this.getPostComments = async function (postID) {
+        const { error, data, message } = await fetchData(`/posts/${postID}/comment`, "GET")
+        if (!data) return message
+        else return data
+
     }
 }

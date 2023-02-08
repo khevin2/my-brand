@@ -26,7 +26,7 @@ const storage = getStorage(app);
 
 export async function uploadToFirebase(file) {
     if (!file) throw "Problem with your file.."
-    const storageRef = ref(storage, 'mybrand/' + `${new Date().getTime()}-${file.name}`)
+    const storageRef = await ref(storage, 'mybrand/' + `${new Date().getTime()}-${file.name}`)
 
     try {
         const snapshot = await uploadBytes(storageRef, file)

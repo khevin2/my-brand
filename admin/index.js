@@ -10,12 +10,14 @@ const worksave = new SaveWork()
 const blogsave = new SaveBlog()
 
 let $email, $id = ''
-if (!sessionStorage.getItem('authed')) window.location = '/login.html'
+if (!sessionStorage.getItem('token')) window.location = '/login.html'
 else {
     $email = sessionStorage.getItem('email')
-    $id = sessionStorage.getItem('_id')
+    const $user = await save.getUserByEmail($email)
+    $id = $user._id
 }
-const user = save.getUser($id)
+const getUser = async () => await save.getUser($id)
+const user = await getUser()
 
 
 const modal = document.querySelector('.modal')
@@ -46,16 +48,18 @@ if (pwd_editor)
 // 
 const accountForm = document.getElementById('account')
 if (accountForm) accountForm.addEventListener('submit', handleAccountForm)
-function handleAccountForm(e) {
+async function handleAccountForm(e) {
     e.preventDefault()
     console.log("saving")
     const form = new FormData(accountForm)
     const data = {}
     for (let [key, value] of form.entries()) data[key] = value
-    data.id = $id
-    if (data.profile instanceof File) data.profile = uploadToFirebase(data.profile)
-    console.log(save.updateUser(data))
-    showError("Saved", accountForm)
+    if (data.photo instanceof File) data.photo = await uploadToFirebase(data.photo)
+    const res = await save.updateUser($id, data)
+    console.log(res)
+    if (res.data)
+        showError("User updated successfully..", accountForm)
+    else showError(res, accountForm)
 
 }
 if (document.querySelector('.account-profile'))
@@ -70,7 +74,7 @@ function openFileChooser(e) {
 const pwdform = document.getElementById('edit-password-form')
 if (pwdform) {
     pwdform.addEventListener('submit', handlePwdChange)
-    function handlePwdChange(e) {
+    async function handlePwdChange(e) {
         e.preventDefault()
         const formData = new FormData(pwdform)
         const data = {}
@@ -80,7 +84,7 @@ if (pwdform) {
         if (data.confirmpwd == "") return showError("New Password does not match!", pwdform)
         if (data.newpwd != data.confirmpwd) return showError("New Password does not match!", pwdform)
         if (save.checkPassword($id, data.currentpwd)) {
-            const newUser = save.updateUser({
+            const newUser = await save.updateUser({
                 id: $id,
                 password: data.newpwd
             })
@@ -91,8 +95,10 @@ if (pwdform) {
     }
     document.getElementsByName('email')[0].value = user.email
     document.getElementsByName('names')[0].value = user.names
-    // document.getElementsByName('profile')[0].value = user.profile
-    document.getElementsByName('age')[0].value = user.age
+    document.getElementsByName('phone')[0].value = user.phone
+    document.getElementsByClassName('account-profile')[0].src = user.photo
+    console.log(user, "\n", new Date(user.dob))
+    document.getElementsByName('dob')[0].value = `${new Date(user?.dob).getFullYear()}-0${new Date(user?.dob).getMonth() + 1}-0${new Date(user?.dob).getDay()}`
 }
 
 /**
@@ -198,18 +204,26 @@ if (blogform) {
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.blogphoto instanceof File) data.blogphoto = await uploadToFirebase(data.blogphoto)
+
+        const tagsArray = data.blogtags.split(',')
+        data.tags = tagsArray.map(tag => tag.trim())
+        if (data.tags[0] == '') data.tags = []
+        delete data.blogtags
+
+
         if (validateBlog(data, blogform)) return
+        console.log(data)
         const params = new URLSearchParams(window.location.search)
         const blogID = params.get('id')
         if (blogID) {
-            blogsave.updateBlog(blogID, data)
-            showError('Saved', blogform)
+            const res = await blogsave.updateBlog(blogID, data)
+            if (res.isErr)
+                showError('Saved', blogform)
+            else showError(res.error, blogform)
         } else {
-            data.likes = 0
-            data.id = generateID()
-            const res = blogsave.saveNewBlog(data)
-            if (res == undefined) showError("Saved", blogform)
-            else showError('An error occured! Let\'s give it another shot!', blogform)
+            const res = await blogsave.saveNewBlog(data)
+            if (res?.title) showError("Saved", blogform)
+            else return showError(`${res}`, blogform)
         }
         blogform.reset()
     }
@@ -220,11 +234,12 @@ if (blogform) {
 
 // DELETE A BLOG
 if (document.getElementById('dash-blog-delete')) {
-    document.getElementById('dash-blog-delete').addEventListener('click', () => {
+    document.getElementById('dash-blog-delete').addEventListener('click', async () => {
         console.log('delete start')
         const params = new URLSearchParams(window.location.search)
         const blogID = params.get('id')
-        blogsave.deleteBlog(blogID)
+        console.log(blogID)
+        await blogsave.deleteBlog(blogID)
         window.location = './blog.html'
     })
 }

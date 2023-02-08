@@ -114,4 +114,13 @@ export function validateBlog(data, form) {
         error = true
         showError("Blog body is too short..", form)
     }
+    if (!(data.tags instanceof Array)) {
+        error = true
+        showError("Tags malformatted..", form)
+    }
+    if (data.tags.length == 0) {
+        error = true
+        showError("Tags cannot be empty..", form)
+    }
+    return error
 }

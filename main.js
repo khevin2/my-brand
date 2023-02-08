@@ -1,4 +1,5 @@
 import Save, { SaveBlog, SaveComment } from "./helpers/save_local.js"
+import { uploadToFirebase } from "./helpers/firebase_util.js"
 import generateID from "./helpers/generate_id.js"
 import showError from "./helpers/show_error.js"
 
@@ -29,41 +30,34 @@ const register = document.querySelector("#register-form")
 if (register)
     register.addEventListener('submit', handleRegitserSubmit)
 
-function handleRegitserSubmit(e) {
+async function handleRegitserSubmit(e) {
     e.preventDefault()
     const form = new FormData(register)
     const data = {}
     for (let [key, value] of form.entries()) {
         data[key] = value
     }
-    data.profile = URL.createObjectURL(data.profile)
-    data.id = generateID()
-    db.saveUser(data)
+    data.photo = await uploadToFirebase(data.photo)
+    const res = await db.saveUser(data)
+    if (res != 'success') return showError(res, register)
+    else showError("User saved..", register)
 }
 
 //Login
 const login = document.querySelector("#login-form")
 if (login) login.addEventListener('submit', handleLogin)
 
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault()
     const form = new FormData(login)
     const data = {}
     for (let [key, value] of form.entries()) {
         data[key] = value
     }
-    if (db.checkEmail(data.email)) {
-        const user = db.getUserByEmail(data.email)
-        // console.log("\n", user, "\n", data)
-        if (user.password == data.password) {
-            sessionStorage.setItem('email', data.email)
-            sessionStorage.setItem('authed', true)
-            sessionStorage.setItem('_id', user.id)
-            window.location = "./admin/"
-        }
-        else alert("Password Incorect")
+    if (await db.login(data)) {
+        window.location = "./admin/"
     }
-    else alert("Email or Password Incorect")
+    else showError("Email or Password incorect..", login)
 }
 
 // COMMENTS FORM
@@ -71,7 +65,7 @@ function handleLogin(e) {
 const commentsform = document.getElementById('client-comment-form')
 if (commentsform) commentsform.addEventListener('submit', handleCommentSubmit)
 
-function handleCommentSubmit(e) {
+async function handleCommentSubmit(e) {
     e.preventDefault()
     console.log("save comment")
     const db = new SaveComment()
@@ -81,9 +75,10 @@ function handleCommentSubmit(e) {
     if (data.comment == "") return showError("Comment empty..", commentsform)
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
     const postID = params.get('id')
-    data.postID = postID
-    db.saveNewComment(data)
-    showError("Comment Saved successfully..", commentsform)
+    const res = await db.saveNewComment(postID, data)
+    if (res._id)
+        showError("Comment Saved successfully..", commentsform)
+    else showError(res, commentsform)
 }
 
 // HANDLE LIKES 
@@ -91,12 +86,14 @@ function handleCommentSubmit(e) {
 const likeBtn = document.getElementById('client-blog-like')
 if (likeBtn) likeBtn.addEventListener('click', handleLike)
 
-function handleLike(e) {
+async function handleLike(e) {
     e.preventDefault()
     const db = new SaveBlog()
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
     const postID = params.get('id')
-    const likes = db.AddLike(postID)
-    document.getElementById('client-like-color').style.fill = "#2F80ED"
-    document.getElementById('client-blog-like-count').innerText = likes
+    if (document.getElementById('client-like-color').style.fill != "#2F80ED") {
+        const { likes } = await db.AddLike(postID)
+        document.getElementById('client-like-color').style.fill = "#2F80ED"
+        document.getElementById('client-blog-like-count').innerText = likes
+    }
 }
