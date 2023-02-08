@@ -12,6 +12,7 @@
             background-image: url("./personal.svg"), url("./feedabck.svg");
             background-position: left bottom, center right;
             background-repeat: no-repeat, no-repeat;
+            background-attachment: fixed;
         }
     </style>
 
@@ -74,7 +75,7 @@
                 <div>
                     <h2>Register</h2>
                 </div>
-                <form action="" id="register-form">
+                <form id="register-form">
 
                     <div class="input input-login">
                         <label for="names" class="">
@@ -99,7 +100,18 @@
                         <input type="email" name="email" placeholder="Email">
                     </div>
                     <div class="input input-login">
-                        <label for="age" class="">
+                        <label for="phone" class="">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.62 11.29C8.06 14.12 10.38 16.44 13.21 17.88L15.41 15.68C15.69 15.4 16.08 15.32 16.43 15.43C17.55 15.8 18.75 16 20 16C20.2652 16 20.5196 16.1054 20.7071 16.2929C20.8946 16.4804 21 16.7348 21 17V20.5C21 20.7652 20.8946 21.0196 20.7071 21.2071C20.5196 21.3946 20.2652 21.5 20 21.5C15.4913 21.5 11.1673 19.7089 7.97918 16.5208C4.79107 13.3327 3 9.00868 3 4.5C3 4.23478 3.10536 3.98043 3.29289 3.79289C3.48043 3.60536 3.73478 3.5 4 3.5H7.5C7.76522 3.5 8.01957 3.60536 8.20711 3.79289C8.39464 3.98043 8.5 4.23478 8.5 4.5C8.5 5.75 8.7 6.95 9.07 8.07C9.18 8.42 9.1 8.81 8.82 9.09L6.62 11.29Z"
+                                    fill="#2F80ED" />
+                            </svg>
+                        </label>
+                        <input type="tel" name="phone" placeholder="Phone number">
+                    </div>
+                    <div class="input input-login">
+                        <label for="dob" class="">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_188_578)">
@@ -126,7 +138,7 @@
                                 </defs>
                             </svg>
                         </label>
-                        <input type="date" name="age" placeholder="Age" min="1">
+                        <input type="date" name="dob" placeholder="Age" min="1">
                     </div>
                     <div class="input input-login">
                         <label for="password" class="">
@@ -140,7 +152,7 @@
                         <input type="password" name="password" placeholder="Password">
                     </div>
                     <div class="input input-login">
-                        <label for="profile" class="">
+                        <label for="photo" class="">
                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -148,7 +160,7 @@
                                     fill="#2F80ED" />
                             </svg>
                         </label>
-                        <input class="create-file-input" type="file" name="profile" placeholder="Profile Picture">
+                        <input class="create-file-input" type="file" name="photo" placeholder="Profile Picture">
                     </div>
                     <div class="form-footer">
                         <a href="#" target="_blank" class="reset_password">Forgot Password?</a>

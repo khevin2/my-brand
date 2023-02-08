@@ -3,10 +3,9 @@ import { SaveAbout, SaveBlog, SaveComment, SaveSkills, SaveWork } from "./save_l
 if (document.getElementById('client-about')) {
     const about = new SaveAbout()
     const data = about.getAbout()
-    // document.getElementById('client-about-img').src = data?.aboutphoto
-    document.getElementById('client-about-occupation').innerText = data?.aboutcarier
-    document.getElementById('client-about-names').innerText = data?.aboutnames
-    document.getElementById('client-about-desc').innerText = data?.aboutdesc
+    document.getElementById('client-about-occupation').innerText = data?.aboutcarier || ''
+    document.getElementById('client-about-names').innerText = data?.aboutnames || ''
+    document.getElementById('client-about-desc').innerText = data?.aboutdesc || ''
 
 }
 
@@ -67,45 +66,49 @@ if (document.getElementById('client-mywork')) {
 }
 if (document.getElementById('client-blogs')) {
     const save = new SaveBlog()
-    const blogs = save.getAllBlogs()
+    const blogs = await save.getAllBlogs()
     let data = ''
     if (blogs.length <= 0) data = "<h4 class='h4'> Blogs will appear here..</h4>"
     else
         for (let blog of blogs) {
             data += `<div class="article">
                     <div class="article-desc">
-                        <a href="./blog_view.html?id=${blog.id}"><h5>${blog.blogtitle}</h5></a>
-                        <p>${blog.blogintro}</p>
+                        <a href="./blog_view.html?id=${blog._id}"><h5>${blog.title}</h5></a>
+                        <p>${blog.intro}</p>
                     </div>
-                    <img src="${blog.blogphoto}" alt="Thumbnail of article">
+                    <img src="${blog.photo}" alt="Thumbnail of article">
                 </div>`
         }
     document.getElementById('client-blogs').innerHTML = data
 }
+/**
+ * Put data in blog view page
+ */
 if (document.getElementById('client-blog-view')) {
     const db = new SaveBlog()
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
     const id = params.get('id')
-    const blog = db.getBlog(id)
-    document.getElementById('client-blog-view-img').src = blog.blogphoto
-    document.getElementById('client-blog-view-title').innerText = blog.blogtitle
-    document.getElementById('client-blog-view-intro').innerText = blog.blogintro
-    document.getElementById('client-blog-view-body').innerText = blog.blogbody
-    document.title = blog.blogtitle
+    const blog = await db.getBlog(id)
+    document.getElementById('client-blog-view-img').src = blog.photo
+    document.getElementById('client-blog-view-title').innerText = blog.title
+    document.getElementById('client-blog-view-intro').innerText = blog.intro
+    document.getElementById('client-blog-view-body').innerText = blog.body
+    document.getElementById('client-blog-like-count').innerText = blog.likes
+    document.title = blog.title
 
 }
 
 if (document.getElementById('client-popular-blogs')) {
     const db = new SaveBlog()
-    const blogs = db.getAllBlogs()
+    const blogs = await db.getAllBlogs()
     let html = ''
     for (let blog of blogs) {
         const divElement = document.createElement('div')
         divElement.classList.add('popular-article')
         const h5 = document.createElement('h5')
-        h5.innerText = blog.blogtitle
+        h5.innerText = blog.title
         const p = document.createElement('p')
-        p.innerText = blog.blogintro
+        p.innerText = blog.intro
         divElement.append(h5, p)
         document.getElementById('client-popular-blogs').append(divElement)
     }
@@ -118,7 +121,7 @@ if (document.getElementById('comments-container')) {
     const db = new SaveComment()
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
     const postID = params.get('id')
-    const comments = db.getPostComments(postID)
+    const comments = await db.getPostComments(postID)
 
     for (let comment of comments) {
         const p = document.createElement('p')
@@ -126,7 +129,7 @@ if (document.getElementById('comments-container')) {
         p.style.padding = '10px'
         p.style.borderRadius = '5px'
         p.style.backgroundColor = '#e8e8e8'
-        p.innerText = comment?.comment
+        p.innerText = comment?.commentBody
         document.getElementById('comments-container').append(p)
     }
 }
@@ -210,13 +213,14 @@ if (document.getElementById('mywork-form')) {
 
 if (document.getElementById('blogs-list-dashboard')) {
     const db = new SaveBlog()
-    const blogs = db.getAllBlogs()
+    const getBlogs = async () => await db.getAllBlogs()
+    const blogs = await getBlogs()
     let data = ''
     if (blogs.length <= 0) data = '<h4 class="h4">Blogs will appear here!</h4>'
     for (let blog of blogs) {
         data += `<div class="popular-article">
-                    <a href='./blog.html?id=${blog.id}'><h5>${blog.blogtitle}</h5></a>
-                    <p>${blog.blogintro}</p>
+                    <a href='./blog.html?id=${blog._id}'><h5>${blog.title}</h5></a>
+                    <p>${blog.intro}</p>
                 </div>`
     }
     document.getElementById('blogs-list-dashboard').innerHTML = data
@@ -232,11 +236,12 @@ if (document.getElementById('blog-form')) {
     const blogID = params.get('id')
     // debugger
     if (blogID != null) {
-        const { blogbody, blogintro, blogtitle, blogphoto } = db.getBlog(blogID)
-        document.getElementById('dash-blog-photo').src = blogphoto
-        document.getElementById('blog-title').value = blogtitle
-        document.getElementById('blog-intro').value = blogintro
-        document.getElementById('blog-body').value = blogbody
+        const { body, intro, title, photo, tags } = await db.getBlog(blogID)
+        document.getElementById('dash-blog-photo').src = photo
+        document.getElementById('blog-title').value = title
+        document.getElementById('blog-intro').value = intro
+        document.getElementById('blog-tags').value = tags
+        document.getElementById('blog-body').value = body
         document.getElementById('dash-blog-delete').style.display = 'flex'
     }
 }
