@@ -203,3 +203,40 @@ if (document.getElementById('mywork-form')) {
         document.getElementById('dash-mywork-frameworks').value = frameworks
     }
 }
+
+/**
+ * BLOGS LIST IN DASHBOARD
+*/
+
+if (document.getElementById('blogs-list-dashboard')) {
+    const db = new SaveBlog()
+    const blogs = db.getAllBlogs()
+    let data = ''
+    if (blogs.length <= 0) data = '<h4 class="h4">Blogs will appear here!</h4>'
+    for (let blog of blogs) {
+        data += `<div class="popular-article">
+                    <a href='./blog.html?id=${blog.id}'><h5>${blog.blogtitle}</h5></a>
+                    <p>${blog.blogintro}</p>
+                </div>`
+    }
+    document.getElementById('blogs-list-dashboard').innerHTML = data
+}
+
+/**
+ * DISPLAY DATA IN BLOG FORM TO UPDATE
+ */
+
+if (document.getElementById('blog-form')) {
+    const db = new SaveBlog()
+    const params = new URLSearchParams(window.location.search) // Get parameters from search params
+    const blogID = params.get('id')
+    // debugger
+    if (blogID != null) {
+        const { blogbody, blogintro, blogtitle, blogphoto } = db.getBlog(blogID)
+        document.getElementById('dash-blog-photo').src = blogphoto
+        document.getElementById('blog-title').value = blogtitle
+        document.getElementById('blog-intro').value = blogintro
+        document.getElementById('blog-body').value = blogbody
+        document.getElementById('dash-blog-delete').style.display = 'flex'
+    }
+}
