@@ -1,7 +1,7 @@
 import Save, { SaveBlog, SaveComment } from "./helpers/save_local.js"
 import { uploadToFirebase } from "./helpers/firebase_util.js"
 import generateID from "./helpers/generate_id.js"
-import showError from "./helpers/show_error.js"
+import showError, { successNotification, errorNotification } from "./helpers/show_error.js"
 
 const db = new Save()
 
@@ -39,8 +39,8 @@ async function handleRegitserSubmit(e) {
     }
     data.photo = await uploadToFirebase(data.photo)
     const res = await db.saveUser(data)
-    if (res != 'success') return showError(res, register)
-    else showError("User saved..", register)
+    if (res != 'success') return errorNotification(res)
+    else successNotification("User saved..")
 }
 
 //Login
@@ -54,10 +54,14 @@ async function handleLogin(e) {
     for (let [key, value] of form.entries()) {
         data[key] = value
     }
+    if (data.email == '') errorNotification("Email empty!")
+    if (data.password == '') errorNotification("Password empty!")
+    if (data.email == '' || data.password == '') return
+
     if (await db.login(data)) {
         window.location = "./admin/"
     }
-    else showError("Email or Password incorect..", login)
+    else errorNotification("Email or Password incorect..")
 }
 
 // COMMENTS FORM
@@ -72,13 +76,13 @@ async function handleCommentSubmit(e) {
     const formData = new FormData(commentsform)
     const data = {}
     for (let [key, value] of formData.entries()) data[key] = value
-    if (data.comment == "") return showError("Comment empty..", commentsform)
+    if (data.comment == "") return errorNotification("Comment empty..")
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
     const postID = params.get('id')
     const res = await db.saveNewComment(postID, data)
     if (res._id)
-        showError("Comment Saved successfully..", commentsform)
-    else showError(res, commentsform)
+        successNotification("Comment Saved successfully..")
+    else errorNotification(res)
 }
 
 // HANDLE LIKES 
