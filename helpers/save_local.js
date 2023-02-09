@@ -214,3 +214,26 @@ export function SaveComment() {
 
     }
 }
+
+export function SaveMessage() {
+    this.save = async function (messageObj) {
+        const res = await fetchData(`/messages`, "POST", messageObj)
+        if (res.error) return { error: res.error, message: res.message }
+        else return { data: res.data, message: res.message }
+    }
+    this.replyMessage = async function (messageID, reply) {
+        const { error, message, data } = await fetchData(`/messages/${messageID}`, "PATCH", { reply })
+        if (error) return { error, message }
+        else return { data, message }
+    }
+    this.getMessages = async function () {
+        const { error, message, data } = await fetchData('/messages', "GET")
+        if (error) return { error, message }
+        else return { data, message }
+    }
+    this.deleteMessage = async function (messageID) {
+        const { error, message, data } = fetchData(`/messages/${messageID}`, "DELETE")
+        if (error) return { error, message }
+        else return { data, message }
+    }
+}
