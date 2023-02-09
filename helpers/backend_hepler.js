@@ -1,4 +1,4 @@
-export const URL = 'http://localhost:6001'
+export const URL = "https://mybrand-backend.up.railway.app"
 
 
 

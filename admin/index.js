@@ -1,5 +1,5 @@
 import generateID from "../helpers/generate_id.js"
-import showError from "../helpers/show_error.js"
+import showError, { successNotification, errorNotification } from "../helpers/show_error.js"
 import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog } from "../helpers/save_local.js" // Utility to save to localstorage
 import { uploadToFirebase } from "../helpers/firebase_util.js"
 import { validateAbout, validateBlog, validateSkills, validateWork } from "../helpers/validate.js"
@@ -58,8 +58,8 @@ async function handleAccountForm(e) {
     const res = await save.updateUser($id, data)
     console.log(res)
     if (res.data)
-        showError("User updated successfully..", accountForm)
-    else showError(res, accountForm)
+        successNotification("User updated successfully..")
+    else errorNotification(res)
 
 }
 if (document.querySelector('.account-profile'))
@@ -79,10 +79,10 @@ if (pwdform) {
         const formData = new FormData(pwdform)
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
-        if (data.currentpwd == "") return showError("Current Password Cannot be empty.", pwdform)
-        if (data.newpwd == "") return showError("New Password does not match!", pwdform)
-        if (data.confirmpwd == "") return showError("New Password does not match!", pwdform)
-        if (data.newpwd != data.confirmpwd) return showError("New Password does not match!", pwdform)
+        if (data.currentpwd == "") return errorNotification("Current Password Cannot be empty.")
+        if (data.newpwd == "") return errorNotification("New Password does not match!")
+        if (data.confirmpwd == "") return errorNotification("New Password does not match!")
+        if (data.newpwd != data.confirmpwd) return errorNotification("New Password does not match!")
         if (save.checkPassword($id, data.currentpwd)) {
             const newUser = await save.updateUser({
                 id: $id,
@@ -91,7 +91,7 @@ if (pwdform) {
             console.log(newUser)
             closeModal()
         }
-        else return showError("Invalid password!", pwdform)
+        else return errorNotification("Invalid password!")
     }
     document.getElementsByName('email')[0].value = user.email
     document.getElementsByName('names')[0].value = user.names
@@ -117,7 +117,7 @@ if (aboutform) {
         console.log(data)
         if (validateAbout(data, aboutform)) return
         aboutsave.saveAbout(data)
-        showError("Saved", aboutform)
+        successNotification("Saved")
     }
     const abt = aboutsave.getAbout()
     // document.getElementsByName('aboutphoto')[0].value = abt.aboutphoto
@@ -146,11 +146,11 @@ if (skillsform) {
         const skillID = params.get('id')
         if (skillID) {
             skillssave.updateSkill(skillID, data)
-            showError("Saved", skillsform)
+            successNotification("Saved")
         } else {
             data.id = generateID()
             skillssave.SaveSkill(data)
-            showError("Saved", skillsform)
+            successNotification("Saved")
         }
         skillsform.reset()
 
@@ -182,11 +182,11 @@ if (myworkform) {
         const workID = params.get('id')
         if (workID) {
             worksave.updateWork(workID, data)
-            showError("Saved", myworkform)
+            successNotification("Saved")
         } else {
             data.id = generateID()
             const res = worksave.SaveNewWork(data)
-            if (res == undefined) showError("Saved", myworkform)
+            if (res == undefined) successNotification("Saved")
         }
         myworkform.reset()
     }
@@ -218,12 +218,12 @@ if (blogform) {
         if (blogID) {
             const res = await blogsave.updateBlog(blogID, data)
             if (res.isErr)
-                showError('Saved', blogform)
-            else showError(res.error, blogform)
+                successNotification('Saved')
+            else errorNotification(res.error)
         } else {
             const res = await blogsave.saveNewBlog(data)
-            if (res?.title) showError("Saved", blogform)
-            else return showError(`${res}`, blogform)
+            if (res?.title) successNotification("Saved")
+            else return errorNotification(`${res}`)
         }
         blogform.reset()
     }
