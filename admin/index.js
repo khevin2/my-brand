@@ -250,14 +250,15 @@ if (document.getElementById('dash-blog-delete')) {
 
 if (document.querySelector('.message-container')) {
     const db = new SaveMessage()
-    const messages = await db.getMessages()
+    const data = await db.getMessages()
+    const messages = data.data
 
     async function deleteMessage(index) {
         const deletedMessage = messages.splice(index, 1)
         makeMessages(messages)
-        const res = await db.deleteMessage(deletedMessage._id)
+        const res = await db.deleteMessage(deletedMessage[0]._id)
         if (res.error) errorNotification(res.message)
-        else successNotification(res.message)
+        else successNotification("Message deleted successfully..")
     }
     async function sendMessage(index, msg) {
         const message = messages[index]

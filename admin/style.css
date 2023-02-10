@@ -675,6 +675,74 @@
 }
 /* Error End */
 
+/* Notification tray */
+.toast-container {
+  position: fixed;
+  height: auto;
+  width: 300px;
+  border-radius: 15px;
+  left: auto;
+  right: 5%;
+  top: auto;
+  bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Notification Card */
+.notication-card {
+  display: flex;
+  align-items: center;
+  width: 290px;
+  padding: 16px;
+  margin-bottom: 15px;
+  border: 3px solid var(--blue);
+  border-radius: 20px;
+  background: rgb(255, 255, 255);
+  color: var(--blue);
+  font-size: large;
+  font-family: "Inria Sans";
+  animation: borderbottom 0.4s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+.error {
+  border: 3px solid rgb(255, 0, 0);
+  /* background: rgb(255, 255, 255);
+  color: var(--blue); */
+}
+
+.notication-card svg {
+  width: 30px;
+  height: 30px;
+  margin-left: 16px;
+  fill: #ff0000;
+}
+.notication-card p {
+  flex: 7;
+}
+
+@keyframes borderbottom {
+  0% {
+    right: 1%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    bottom: 2%;
+    right: 5%;
+    opacity: 1;
+  }
+}
+
+/* Notification Card End */
+.d-nonne {
+  display: none !important;
+}
+
 .message-container {
   width: 100%;
   height: auto;
