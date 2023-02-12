@@ -1,6 +1,6 @@
 import generateID from "../helpers/generate_id.js"
 import showError, { successNotification, errorNotification } from "../helpers/show_error.js"
-import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog } from "../helpers/save_local.js" // Utility to save to localstorage
+import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog, SaveMessage } from "../helpers/save_local.js" // Utility to save to localstorage
 import { uploadToFirebase } from "../helpers/firebase_util.js"
 import { validateAbout, validateBlog, validateSkills, validateWork } from "../helpers/validate.js"
 const save = new Save() // Initialize the utility
@@ -242,4 +242,111 @@ if (document.getElementById('dash-blog-delete')) {
         await blogsave.deleteBlog(blogID)
         window.location = './blog.html'
     })
+}
+
+
+
+// HANDLE MESSAGES   
+
+if (document.querySelector('.message-container')) {
+    const db = new SaveMessage()
+    const data = await db.getMessages()
+    const messages = data.data
+
+    async function deleteMessage(index) {
+        const deletedMessage = messages.splice(index, 1)
+        makeMessages(messages)
+        const res = await db.deleteMessage(deletedMessage[0]._id)
+        if (res.error) errorNotification(res.message)
+        else successNotification("Message deleted successfully..")
+    }
+    async function sendMessage(index, msg) {
+        const message = messages[index]
+        const res = await db.replyMessage(message._id, msg)
+        if (res.error) errorNotification(res.message)
+        else successNotification(res.message)
+
+    }
+
+    // MAKE MESSAGES
+    async function makeMessages(messageArr) {
+        document.querySelector('.message-container').innerHTML = ""
+
+        messageArr.forEach((msg, id) => {
+
+            const messageContainer = document.createElement("div");
+            messageContainer.classList.add("single-message");
+
+            const messagePart = document.createElement("div");
+            messagePart.classList.add("message-part");
+            messageContainer.appendChild(messagePart);
+
+            const senderContainer = document.createElement("span");
+            senderContainer.classList.add("message-sender");
+            messagePart.appendChild(senderContainer);
+
+            const senderName = document.createElement("h6");
+            senderName.classList.add("message-names");
+            senderName.textContent = msg.names;
+            senderContainer.appendChild(senderName);
+
+            const senderEmail = document.createElement("h6");
+            senderEmail.classList.add("message-names");
+            senderEmail.textContent = msg.email;
+            senderContainer.appendChild(senderEmail);
+
+            const message = document.createElement("span");
+            message.classList.add("message");
+            messagePart.appendChild(message);
+
+            const subject = document.createElement("h6");
+            subject.classList.add("message-subject");
+            subject.textContent = msg.subject;
+            message.appendChild(subject);
+
+            const body = document.createElement("p");
+            body.classList.add("message-body");
+            body.textContent = msg.body;
+            message.appendChild(body);
+
+            const actionsContainer = document.createElement("span");
+            actionsContainer.classList.add("message-action");
+            messagePart.appendChild(actionsContainer);
+
+            const sendIcon = document.createElement("i");
+            sendIcon.classList.add("bx", "bx-send", "bx-md", "text-blue", "pointer");
+            actionsContainer.appendChild(sendIcon);
+
+            const trashIcon = document.createElement("i");
+            trashIcon.classList.add("bx", "bxs-trash", "bx-md", "pointer");
+            trashIcon.style.color = "rgb(183, 0, 0)";
+            actionsContainer.appendChild(trashIcon);
+
+            const respondContainer = document.createElement("div");
+            respondContainer.classList.add("message-respond", "d-none");
+            messageContainer.appendChild(respondContainer);
+
+            const textarea = document.createElement("textarea");
+            respondContainer.appendChild(textarea);
+
+            const sendButton = document.createElement("button");
+            sendButton.type = "button";
+            respondContainer.appendChild(sendButton);
+
+            const buttonIcon = document.createElement("i");
+            buttonIcon.classList.add("bx", "bx-send", "bx-sm");
+            buttonIcon.style.color = "inherit";
+            sendButton.appendChild(buttonIcon);
+
+            sendIcon.addEventListener('click', () => respondContainer.classList.toggle('d-none'))
+
+            trashIcon.addEventListener('click', () => deleteMessage(id))
+
+            sendButton.addEventListener('click', () => sendMessage(id, textarea.value))
+
+            document.querySelector('.message-container').append(messageContainer)
+
+        });
+    }
+    makeMessages(messages)
 }

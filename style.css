@@ -729,7 +729,7 @@ body {
   width: 290px;
   padding: 16px;
   margin-bottom: 15px;
-  border: 3px solid rgb(255, 255, 255);
+  border: 3px solid var(--blue);
   border-radius: 20px;
   background: rgb(255, 255, 255);
   color: var(--blue);
@@ -741,8 +741,8 @@ body {
 }
 .error {
   border: 3px solid rgb(255, 0, 0);
-  /* background: rgb(255, 255, 255);
-  color: var(--blue); */
+  /* background: rgb(255, 255, 255); */
+  color: rgb(255, 0, 0);
 }
 
 .notication-card svg {
@@ -771,6 +771,42 @@ body {
 }
 
 /* Notification Card End */
+
+/* Loading indicator */
+.loading {
+  position: fixed;
+  animation: load-animate 0.7s linear infinite;
+  height: 3px;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
+@keyframes load-animate {
+  0% {
+    background: var(--blue);
+    left: 0;
+    right: auto;
+    width: 0%;
+  }
+  /* 50% {
+    left: auto;
+    right: 0;
+    width: 100%;
+  } */
+
+  100% {
+    background: rgb(255, 255, 255);
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+}
+
+/* Loading indicator end */
+
 .d-nonne {
   display: none !important;
 }

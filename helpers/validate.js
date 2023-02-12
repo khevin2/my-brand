@@ -124,3 +124,47 @@ export function validateBlog(data, form) {
     }
     return error
 }
+
+export function validateContactForm(data) {
+    let error = false
+
+    if (!data.names) {
+        error = true
+        errorNotification("Names are missing..")
+    }
+    if (data.names == '') {
+        error = true
+        errorNotification("Names are missing..")
+    }
+    if (data.names.length < 4) {
+        error = true
+        errorNotification("Names are too short..")
+    }
+    if (!data.email) {
+        error = true
+        errorNotification("Email is missing..")
+    }
+
+    const emailRegex = /^[a-zA-Z0-9.@]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/
+    if (!emailRegex.test(data.email)) {
+        error = true
+        errorNotification("Email is not valid..")
+    }
+    if (!data.subject) {
+        error = true
+        errorNotification("Subject is missing..")
+    }
+    if (data.subject.length < 3) {
+        error = true
+        errorNotification("Subject is too short..")
+    }
+    if (data.body.length < 4) {
+        error = true
+        errorNotification("Message is too short..")
+    }
+    if (!data.body) {
+        error = true
+        errorNotification("Message is empty..")
+    }
+    return error
+}
