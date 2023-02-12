@@ -1,7 +1,8 @@
-import Save, { SaveBlog, SaveComment } from "./helpers/save_local.js"
+import Save, { SaveBlog, SaveComment, SaveMessage } from "./helpers/save_local.js"
 import { uploadToFirebase } from "./helpers/firebase_util.js"
-import generateID from "./helpers/generate_id.js"
+import { showLoading, removeLoading } from "./helpers/loader.js"
 import showError, { successNotification, errorNotification } from "./helpers/show_error.js"
+import { validateContactForm } from "./helpers/validate.js"
 
 const db = new Save()
 
@@ -99,5 +100,31 @@ async function handleLike(e) {
         const { likes } = await db.AddLike(postID)
         document.getElementById('client-like-color').style.fill = "#2F80ED"
         document.getElementById('client-blog-like-count').innerText = likes
+    }
+}
+
+// HANDLE CONTACT FORM
+
+const contactform = document.getElementById('client-contact-form')
+if (contactform) {
+    contactform.addEventListener('submit', handleContactSubmit)
+
+    async function handleContactSubmit(e) {
+        e.preventDefault()
+
+        const data = {}
+        const formData = new FormData(contactform)
+
+        for (let [key, value] of formData.entries()) data[key] = value
+
+        if (validateContactForm(data)) return
+
+
+        const db = new SaveMessage()
+        const res = await db.save(data)
+        if (res.error) return errorNotification(`${res.message}\nCould not send message!`)
+        else successNotification(`Message sent!`)
+
+        contactform.reset()
     }
 }
