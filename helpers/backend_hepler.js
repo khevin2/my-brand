@@ -1,6 +1,6 @@
 import { errorNotification } from "./show_error.js"
 
-export const URL = "https://mybrand-backend.up.railway.app"
+export const URL = "http://localhost:6001"
 
 
 

@@ -1,0 +1,195 @@
+/* SETTINGS PAGE */
+.settings-nav {
+  position: fixed;
+  margin-top: 80px;
+  width: 20%;
+  height: calc(100vh - 80px);
+  background: var(--blue);
+}
+.settings-nav > ul {
+  width: 100%;
+  list-style: none;
+}
+.settings-nav > ul > li {
+  width: 100%;
+  height: 60px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  padding-left: 20px;
+  color: white;
+  line-height: 60px;
+  cursor: pointer;
+}
+.settings-container {
+  position: absolute;
+  margin-top: 80px;
+  margin-left: 20%;
+  width: 80%;
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+.settings-profile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.settings-header {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 27px;
+  color: #2f80ed;
+}
+.settings-profile-container {
+  width: 517px;
+  height: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: center;
+  margin-top: 28px;
+}
+.settings-profile-container > span {
+  border-radius: 50%;
+  height: 130px;
+  width: 130px;
+  position: relative;
+}
+.settings-profile-container > span > img {
+  border-radius: 50%;
+  height: 130px;
+  width: 130px;
+  position: relative;
+  z-index: 3;
+}
+.settings-profile-container > span > img:hover {
+  opacity: 0.4;
+}
+.setting-add-img {
+  background: url("./../assets/img/plus-circle.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: calc(50% - 25px);
+  bottom: auto;
+  left: calc(50% - 25px);
+  right: auto;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+}
+.settings-input-group {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin-top: 26px;
+}
+.settings-change-password {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.settings-change-password-header {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 27px;
+  color: #2f80ed;
+}
+.settings-menu {
+  display: none;
+}
+.sub-menu {
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: calc(50% - 60px);
+  display: none;
+  width: 120px;
+  list-style: none;
+}
+.sub-menu > li {
+  width: 100%;
+  height: 30px;
+  background: var(--white-gray);
+  backdrop-filter: blur(2px);
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+.sub-menu > li > a {
+  color: black;
+  text-decoration: none;
+}
+.settings-btn {
+  position: relative;
+}
+.settings-btn > img {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+}
+.settings-btn:hover .sub-menu {
+  display: block;
+}
+@media (max-width: 600px) {
+  .settings-nav {
+    display: none;
+  }
+  .settings-container {
+    margin-left: auto;
+    width: 100%;
+  }
+  .settings-input-group {
+    width: 90%;
+    margin-left: 5%;
+  }
+  .settings-profile-container {
+    width: 80%;
+  }
+  /* SETINGS MENU */
+  .settings-menu {
+    display: block;
+    width: 80px;
+    height: 50px;
+    background: var(--blue);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-left: 30px;
+    position: fixed;
+    top: 85px;
+    bottom: auto;
+    left: 0;
+    right: auto;
+    z-index: 10;
+  }
+  .settings-menu-btn {
+    background: none;
+    border: none;
+    height: 100%;
+    color: white;
+  }
+  .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+  }
+  .settings-menu-btn:hover .sub-menu {
+    display: block;
+  }
+}

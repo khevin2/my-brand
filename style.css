@@ -80,7 +80,7 @@ body {
   justify-content: space-between;
 }
 
-.nav-links a {
+.nav-links > a {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -738,6 +738,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
 }
 
 /* Notification Card */

@@ -59,8 +59,11 @@ async function handleLogin(e) {
     if (data.password == '') errorNotification("Password empty!")
     if (data.email == '' || data.password == '') return
 
-    if (await db.login(data)) {
-        window.location = "./admin/"
+    const res = await db.login(data)
+    if (res.userType) {
+        if (res.userType == "admin")
+            window.location = "./admin/"
+        else window.location = './settings.html'
     }
     else errorNotification("Email or Password incorect..")
 }
