@@ -129,7 +129,13 @@ if (document.getElementById('comments-container')) {
         p.style.padding = '10px'
         p.style.borderRadius = '5px'
         p.style.backgroundColor = '#e8e8e8'
-        p.innerText = comment?.commentBody
+        p.style.display = 'flex'
+        const span = document.createElement('span')
+        span.innerText = comment?.commentBody
+        span.style.flex = 1
+        const p2 = document.createElement('p')
+        p2.innerText = "John Doe"
+        p.append(span, p2)
         document.getElementById('comments-container').append(p)
     }
 }

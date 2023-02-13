@@ -3,6 +3,7 @@ import showError, { successNotification, errorNotification } from "../helpers/sh
 import Save, { SaveAbout, SaveSkills, SaveWork, SaveBlog, SaveMessage } from "../helpers/save_local.js" // Utility to save to localstorage
 import { uploadToFirebase } from "../helpers/firebase_util.js"
 import { validateAbout, validateBlog, validateSkills, validateWork } from "../helpers/validate.js"
+import { signout } from "../assets/js/signout.js"
 const save = new Save() // Initialize the utility
 const aboutsave = new SaveAbout()
 const skillssave = new SaveSkills()
@@ -12,6 +13,7 @@ const blogsave = new SaveBlog()
 let $email, $id = ''
 if (!sessionStorage.getItem('token')) window.location = '/login.html'
 else {
+    if (sessionStorage.getItem('userType') != "admin") window.location = "/login.html"
     $email = sessionStorage.getItem('email')
     const $user = await save.getUserByEmail($email)
     $id = $user._id
@@ -80,18 +82,14 @@ if (pwdform) {
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.currentpwd == "") return errorNotification("Current Password Cannot be empty.")
-        if (data.newpwd == "") return errorNotification("New Password does not match!")
-        if (data.confirmpwd == "") return errorNotification("New Password does not match!")
+        if (data.newpwd == "") return errorNotification("New Password should not be empty!")
+        if (data.confirmpwd == "") return errorNotification("Confirm Password should not be empty!")
         if (data.newpwd != data.confirmpwd) return errorNotification("New Password does not match!")
-        if (save.checkPassword($id, data.currentpwd)) {
-            const newUser = await save.updateUser({
-                id: $id,
-                password: data.newpwd
-            })
-            console.log(newUser)
-            closeModal()
-        }
-        else return errorNotification("Invalid password!")
+
+        const res = await save.checkPassword($id, { password: data.currentpwd, newPassword: data.newpwd })
+        if (res.data) successNotification("Password Updated")
+
+        else return errorNotification(res.message)
     }
     document.getElementsByName('email')[0].value = user.email
     document.getElementsByName('names')[0].value = user.names
@@ -350,3 +348,11 @@ if (document.querySelector('.message-container')) {
     }
     makeMessages(messages)
 }
+
+// HANDLE DASHBOARD LOG OUT
+
+const logoutBtn = document.getElementById('dash-logout-btn')
+logoutBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    signout()
+})

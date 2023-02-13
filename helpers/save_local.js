@@ -77,14 +77,15 @@ function Save() {
         }
     }
 
-    this.checkPassword = function (id, password) {
+    this.checkPassword = async function (id, obj) {
         try {
             showLoading()
-            let users = JSON.parse(this.users)
-            if (users.find(user => user.password == password)) {
-                return this.getUser(id).password == password
-            }
-            else return false
+            const res = await fetchData(`/users/password/${id}`, 'PATCH', obj)
+            console.log(res)
+            if (res.data) return { message: res.message, data: res.data }
+
+            else return { message: `${res.message}\nError! could not update password..`, error: true }
+
         } finally {
             removeLoading()
         }
@@ -119,7 +120,8 @@ function Save() {
             if (res.message == 'success') {
                 sessionStorage.setItem("token", res.token)
                 sessionStorage.setItem('email', data.email)
-                return true
+                sessionStorage.setItem('userType', res.userType)
+                return { userType: res.userType }
             }
             return false
         } finally {
