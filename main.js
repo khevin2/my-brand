@@ -3,6 +3,7 @@ import { uploadToFirebase } from "./helpers/firebase_util.js"
 import { showLoading, removeLoading } from "./helpers/loader.js"
 import showError, { successNotification, errorNotification } from "./helpers/show_error.js"
 import { validateContactForm } from "./helpers/validate.js"
+import { signout } from "./assets/js/signout.js"
 
 const db = new Save()
 
@@ -73,6 +74,13 @@ async function handleLogin(e) {
 const commentsform = document.getElementById('client-comment-form')
 if (commentsform) commentsform.addEventListener('submit', handleCommentSubmit)
 
+// Hide comment form if the viewer is not authenticated
+if (commentsform)
+    if (!sessionStorage.getItem("token")) {
+        commentsform.classList.add('d-nonne')
+        document.getElementById('client-comment-message').style.display = 'block'
+    }
+
 async function handleCommentSubmit(e) {
     e.preventDefault()
     console.log("save comment")
@@ -96,6 +104,9 @@ if (likeBtn) likeBtn.addEventListener('click', handleLike)
 
 async function handleLike(e) {
     e.preventDefault()
+    if (!sessionStorage.getItem("token")) {
+        return errorNotification("You should login first..")
+    }
     const db = new SaveBlog()
     const params = new URLSearchParams(window.location.search) // Get parameters from search params
     const postID = params.get('id')
@@ -130,4 +141,40 @@ if (contactform) {
 
         contactform.reset()
     }
+}
+
+if (sessionStorage.getItem("token")) {
+    const navLinks = document.querySelector('.nav-links')
+    navLinks.removeChild(navLinks.lastElementChild)
+
+    const settingsBtn = document.createElement('div');
+    settingsBtn.className = 'settings-btn';
+
+    const profileImage = document.createElement('img');
+    profileImage.src = 'https://picsum.photos/36/36';
+    profileImage.alt = 'profile';
+    settingsBtn.appendChild(profileImage);
+
+    const subMenu = document.createElement('ul');
+    subMenu.className = 'sub-menu';
+    settingsBtn.appendChild(subMenu);
+
+    const settingsLink = document.createElement('li');
+    const settingsLinkAnchor = document.createElement('a');
+    settingsLinkAnchor.href = './settings.html';
+    settingsLinkAnchor.textContent = 'Settings';
+    settingsLink.appendChild(settingsLinkAnchor);
+    subMenu.appendChild(settingsLink);
+
+    const signOutBtn = document.createElement('li');
+    signOutBtn.id = 'settings-nav-signout-btn';
+    signOutBtn.style.cursor = 'pointer';
+    signOutBtn.textContent = 'Sign Out';
+    subMenu.appendChild(signOutBtn);
+
+    navLinks.append(settingsBtn)
+
+    // Logout button
+    document.getElementById("settings-nav-signout-btn")
+        .addEventListener("click", () => signout())
 }
