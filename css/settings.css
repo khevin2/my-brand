@@ -67,7 +67,7 @@
   height: 130px;
   width: 130px;
   position: relative;
-  z-index: 3;
+  z-index: 1;
 }
 .settings-profile-container > span > img:hover {
   opacity: 0.4;
@@ -83,7 +83,11 @@
   right: auto;
   width: 50px;
   height: 50px;
+  opacity: 0;
   z-index: 2;
+}
+.setting-add-img:hover {
+  opacity: 1;
 }
 .settings-input-group {
   display: flex;
