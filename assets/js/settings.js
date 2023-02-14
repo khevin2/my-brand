@@ -72,8 +72,14 @@ document.getElementById("settings-signout-btn")
 document.getElementById("settings-nav-signout-btn")
     .addEventListener("click", () => signout())
 
+document.querySelector(".setting-add-img")
+    .addEventListener("click", () => {
+        document.getElementsByName("photo")[0].click()
+        console.log("click")
+    })
+
 document.getElementsByName('names')[0].value = user.names
 document.getElementsByName('email')[0].value = user.email
 document.getElementsByName('phone')[0].value = user.phone
 document.getElementsByName('dob')[0].value = `${new Date(user?.dob).getFullYear()}-${new Date(user?.dob).getMonth() + 1}-0${new Date(user?.dob).getDay()}`
-document.getElementsByName('photo')[0].src = user.photo
+document.getElementById('settings-user-img').src = user.photo

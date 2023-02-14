@@ -146,12 +146,13 @@ if (contactform) {
 if (sessionStorage.getItem("token")) {
     const navLinks = document.querySelector('.nav-links')
     navLinks.removeChild(navLinks.lastElementChild)
+    const { photo } = await db.getUserByEmail(sessionStorage.getItem('email'))
 
     const settingsBtn = document.createElement('div');
     settingsBtn.className = 'settings-btn';
 
     const profileImage = document.createElement('img');
-    profileImage.src = 'https://picsum.photos/36/36';
+    profileImage.src = photo;
     profileImage.alt = 'profile';
     settingsBtn.appendChild(profileImage);
 
