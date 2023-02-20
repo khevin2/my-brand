@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | My Work</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -63,7 +64,7 @@
         </div>
     </div>
     <div class="container">
-        <nav class="nav">
+        <nav class="nav d-sm-none">
             <div class="avatar">
                 <img src="./../assets/img/avatar-admin.png" alt="avatar">
             </div>
@@ -148,12 +149,15 @@
             </ul>
         </nav>
         <div class="title">
+            <div class="menu"><button id="menu-btn"><i class="bx bx-menu bx-md" style="color: white;"
+                        id="bx-icon"></i></button>
+            </div>
             <h3>CYUSA / MY WORK</h3>
         </div>
         <form id="mywork-form" class="main">
 
-            <div class="skill-desc" style="width:576px !important; height: 240px;">
-                <div class="skill-img" style="width: 300px;height: 240px;margin-right: 25px;">
+            <div class="skill-desc mywork-desc">
+                <div class="skill-img mywork-img">
                     <img src="" alt="" style="width: auto; height:auto;" id="dash-mywork-photo">
                     <input type="file" class="d-none" accept="image/*" id="mywork-img" name="myworkimg">
                     <svg id="mywork-img-btn" width="50" height="50" viewBox="0 0 50 50" fill="none"
@@ -163,7 +167,7 @@
                             fill="#0076BF" />
                     </svg>
                 </div>
-                <div class="skill-details">
+                <div class="skill-details mywork-details">
                     <p class="skill-details-p">
                         <input value="" class="edit-input" name="workname" style="width: 40%;" id="dash-mywork-name"
                             placeholder="Work title">
@@ -226,6 +230,7 @@
 
     </div>
     <div class="toast-container"></div>
+    <script src="../assets/js/dashboard.js"></script>
     <script src="./index.js" type="module"></script>
     <script src="./../helpers/display_data.js" type="module"></script>
 </body>

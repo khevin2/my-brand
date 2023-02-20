@@ -12,7 +12,7 @@
 
 <body>
     <div class="container">
-        <nav class="nav">
+        <nav class="nav d-sm-none">
             <div class="avatar">
                 <img src="./../assets/img/avatar-admin.png" alt="avatar" id="profile-pic">
             </div>
@@ -97,10 +97,13 @@
             </ul>
         </nav>
         <div class="title">
+            <div class="menu"><button id="menu-btn"><i class="bx bx-menu bx-md" style="color: white;"
+                        id="bx-icon"></i></button>
+            </div>
             <h3>CYUSA > MESSAGES</h3>
         </div>
 
-        <form id="" class="main" style="width: 914px;">
+        <form id="" class="main messages-main">
             <div class="message-container">
                 <!-- <div class="single-message">
                     <div class="message-part">
@@ -131,6 +134,7 @@
 
     </div>
     <div class="toast-container"></div>
+    <script src="../assets/js/dashboard.js"></script>
     <script src="./index.js" type="module"></script>
 </body>
 

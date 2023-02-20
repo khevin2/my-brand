@@ -352,7 +352,8 @@ if (document.querySelector('.message-container')) {
 // HANDLE DASHBOARD LOG OUT
 
 const logoutBtn = document.getElementById('dash-logout-btn')
-logoutBtn.addEventListener('click', (e) => {
-    e.preventDefault()
-    signout()
-})
+if (logoutBtn)
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        signout()
+    })
