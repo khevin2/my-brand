@@ -837,6 +837,11 @@ body {
 .d-nonne {
   display: none !important;
 }
+@media (max-width: 600px) {
+  .d-sm-none {
+    display: none !important;
+  }
+}
 /* Menu button end */
 @media (max-width: 1000px) {
   .nav-links {

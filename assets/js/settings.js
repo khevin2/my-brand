@@ -48,29 +48,29 @@ async function changePassword(e) {
 }
 
 
-profileTab.addEventListener("submit", editUser)
-passwordChangeTab.addEventListener('submit', changePassword)
+// profileTab.addEventListener("submit", editUser)
+// passwordChangeTab.addEventListener('submit', changePassword)
 
-function showProfileTab() {
-    profileTab.classList.remove('d-nonne')
-    passwordChangeTab.classList.add('d-nonne')
-}
-function showChangePasswordTab() {
-    profileTab.classList.add('d-nonne')
-    passwordChangeTab.classList.remove('d-nonne')
-}
+// function showProfileTab() {
+//     profileTab.classList.remove('d-nonne')
+//     passwordChangeTab.classList.add('d-nonne')
+// }
+// function showChangePasswordTab() {
+//     profileTab.classList.add('d-nonne')
+//     passwordChangeTab.classList.remove('d-nonne')
+// }
 
-document.getElementById("settings-edit-user-btn")
-    .addEventListener("click", showProfileTab)
+// document.getElementById("settings-edit-user-btn")
+//     .addEventListener("click", showProfileTab)
 
-document.getElementById("settings-edit-password-btn")
-    .addEventListener("click", showChangePasswordTab)
+// document.getElementById("settings-edit-password-btn")
+//     .addEventListener("click", showChangePasswordTab)
 
-document.getElementById("settings-signout-btn")
-    .addEventListener("click", () => signout())
+// document.getElementById("settings-signout-btn")
+//     .addEventListener("click", () => signout())
 
-document.getElementById("settings-nav-signout-btn")
-    .addEventListener("click", () => signout())
+// document.getElementById("settings-nav-signout-btn")
+//     .addEventListener("click", () => signout())
 
 document.querySelector(".setting-add-img")
     .addEventListener("click", () => {

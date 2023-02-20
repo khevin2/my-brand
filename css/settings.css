@@ -1,4 +1,16 @@
 /* SETTINGS PAGE */
+
+.settings-react-container {
+  /* CONTAINER FOR REACT */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: auto;
+  top: 0;
+  bottom: auto;
+}
+
 .settings-nav {
   position: fixed;
   margin-top: 80px;
@@ -152,7 +164,12 @@
 }
 @media (max-width: 600px) {
   .settings-nav {
-    display: none;
+    width: 100%;
+    padding-top: 60px;
+    z-index: 10;
+  }
+  .settings-nav > ul > li {
+    padding-left: 50px;
   }
   .settings-container {
     margin-left: auto;
@@ -173,6 +190,7 @@
     background: var(--blue);
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
+    border: 1px solid white;
     padding-left: 30px;
     position: fixed;
     top: 85px;
