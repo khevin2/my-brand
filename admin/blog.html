@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Create Blog</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -63,7 +64,7 @@
         </div>
     </div>
     <div class="container">
-        <nav class="nav">
+        <nav class="nav d-sm-none">
             <div class="avatar">
                 <img src="./../assets/img/avatar-admin.png" alt="avatar">
             </div>
@@ -148,6 +149,9 @@
             </ul>
         </nav>
         <div class="title">
+            <div class="menu"><button id="menu-btn"><i class="bx bx-menu bx-md" style="color: white;"
+                        id="bx-icon"></i></button>
+            </div>
             <h3>CYUSA / CREATE ARTICLE</h3>
         </div>
         <form id="blog-form" class="main">
@@ -178,13 +182,13 @@
                     </div>
                 </div>
             </div>
-            <div class="input input-login" style="margin-bottom: 0px; width: 400px;margin-top: 25px;">
+            <div class="input input-login blog-single-input">
                 <label for="blog-tags" class="bg-gray width-auto">
                     Tags
                 </label>
                 <input type="text" id="blog-tags" name="blogtags" placeholder="Tags of post(comma separated)">
             </div>
-            <div class="input input-login" style="width: 400px; height: 256px; margin-top: 10px; margin-bottom: 10px;">
+            <div class="input input-login blog-single-textarea">
                 <label for="blog-body" class="bg-gray width-auto" style="align-items: normal; padding-top: 10px;">
                     Body
                 </label>
@@ -214,6 +218,7 @@
 
     </div>
     <div class="toast-container"></div>
+    <script src="../assets/js/dashboard.js"></script>
     <script src="./index.js" type="module"></script>
     <script src="./../helpers/display_data.js" type="module"></script>
 </body>

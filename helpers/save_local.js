@@ -32,9 +32,9 @@ function Save() {
     this.saveUser = async function (user) {
         try {
             showLoading()
-            if (this.checkEmail(user.email)) return `User with ${user.email} already exists.`
+            // if (this.checkEmail(user.email)) return `User with ${user.email} already exists.`
             const { message, data } = await fetchData('/users', 'post', user)
-            if (message == 'success') return data
+            if (message == 'success') return { data, message }
             else return message
         } finally {
             removeLoading()
@@ -133,70 +133,175 @@ function Save() {
 export default Save
 
 export function SaveAbout() {
-    this.getAbout = function () {
-        const about = localStorage.getItem('about') || '{}'
-        return JSON.parse(about)
+    let about = {
+        aboutphoto: "",
+        aboutnames: "Cyusa kheven",
+        aboutcarier: "Software Developer",
+        aboutdesc: "I am a software engineer with 2 years of experience. I am passionate about Agile development and Javascript.\nI am currently learning ReactJS and React native. I am result oriented and a people’ person."
+
     }
-    this.saveAbout = function (about) {
-        if (about.aboutphoto == '') return "Add photo please!"
-        if (about.aboutnames == '') return "Names cannot be empty!"
-        if (about.aboutcarier == "") return "Position cannot be empty!"
-        if (about.aboutdesc == "") return "Description cannot be empty!"
-        localStorage.setItem('about', JSON.stringify(about))
+    this.getAbout = function () {
+        // const about = localStorage.getItem('about') || '{}'
+        return about
+    }
+    this.saveAbout = function (newabout) {
+        if (newabout.aboutphoto == '') return "Add photo please!"
+        if (newabout.aboutnames == '') return "Names cannot be empty!"
+        if (newabout.aboutcarier == "") return "Position cannot be empty!"
+        if (newabout.aboutdesc == "") return "Description cannot be empty!"
+        // localStorage.setItem('about', JSON.stringify(about))
+        Object.assign(about, newabout)
     }
 }
 
 export function SaveSkills() {
     this.skills = localStorage.getItem('skills') || '[]'
 
-    this.SaveSkill = function (skill) {
-        if (skill.skillphoto == '') return "Add photo please"
-        if (skill.skillname == '') return "Add Skill name please"
-        if (skill.bannerphoto == '') return 'Add banner please'
-        if (skill.skilldesc == '') return "Add description please"
-        const skills = JSON.parse(localStorage.getItem('skills') || '[]')
-        skills.push(skill)
-        localStorage.setItem('skills', JSON.stringify(skills))
+    this.SaveSkill = async function (skill) {
+        // if (skill.skillphoto == '') return "Add photo please"
+        // if (skill.skillname == '') return "Add Skill name please"
+        // if (skill.bannerphoto == '') return 'Add banner please'
+        // if (skill.skilldesc == '') return "Add description please"
+        // const skills = JSON.parse(localStorage.getItem('skills') || '[]')
+        // skills.push(skill)
+        // localStorage.setItem('skills', JSON.stringify(skills))
+        try {
+            showLoading()
+            const { error, message, data } = await fetchData('/skills', "POST", skill)
+            if (error) return { error: true, message }
+            else return { data, message }
+        }
+        finally {
+            removeLoading()
+        }
     }
-    this.getSkill = function (id) {
-        const skills = JSON.parse(localStorage.getItem('skills') || '[]')
-        return skills.filter(skill => skill.id == id)[0] || {}
+    this.getSkill = async function (id) {
+        // const skills = JSON.parse(localStorage.getItem('skills') || '[]')
+        // return skills.filter(skill => skill.id == id)[0] || {}
+        try {
+            showLoading()
+            const { error, message, data } = await fetchData(`/skills/${id}`, "GET")
+            if (message == "success") return { message, data }
+            else return { message, data: {} }
+        }
+        finally {
+            removeLoading()
+        }
     }
-    this.getAllSkills = function () {
-        return JSON.parse(localStorage.getItem('skills') || '[]')
+    this.getAllSkills = async function () {
+        // return JSON.parse(localStorage.getItem('skills') || '[]')
+        try {
+            showLoading()
+            const { length, message, data } = await fetchData(`/skills`, "GET")
+            if (length <= 0) return { length, data: {} }
+            else return { message, data }
+        }
+        finally {
+            removeLoading()
+        }
     }
-    this.updateSkill = function (id, object) {
-        const skills = JSON.parse(localStorage.getItem('skills') || '[]')
-        const index = skills.findIndex(skill => skill.id == id)
-        Object.assign(skills[index], object)
-        localStorage.setItem('skills', JSON.stringify(skills))
+
+
+    this.updateSkill = async function (id, object) {
+        // const skills = JSON.parse(localStorage.getItem('skills') || '[]')
+        // const index = skills.findIndex(skill => skill.id == id)
+        // Object.assign(skills[index], object)
+        // localStorage.setItem('skills', JSON.stringify(skills))
+        try {
+            showLoading()
+            const { error, data, message } = await fetchData(`/skills/${id}`, "PATCH", object)
+            if (!data) return { error: true, message: "Could not update this skill" }
+            else return { message, data }
+        }
+        finally {
+            removeLoading()
+        }
+    }
+    this.deleteSkill = async function (id) {
+        try {
+            showLoading()
+            const { error, data, message } = await fetchData(`/skills/${id}`, "DELETE")
+            if (message != 'success') return { error: true, message: "Could not delete this skill" }
+            else return { message, data }
+        }
+        finally {
+            removeLoading()
+        }
     }
 }
 
 export function SaveWork() {
-    this.SaveNewWork = function (work) {
-        if (work.myworkimg == '') return "Add photo please"
-        if (work.workname == '') return "Add work name please"
-        if (work.link_to_project == '') return 'Add link to project please'
-        if (work.workdesc == '') return "Add description please"
-        if (work.frameworks == '') return "Add frameworks please"
-        const works = JSON.parse(localStorage.getItem('works') || '[]')
-        works.push(work)
-        localStorage.setItem('works', JSON.stringify(works))
+    this.SaveNewWork = async function (work) {
+        // if (work.myworkimg == '') return "Add photo please"
+        // if (work.workname == '') return "Add work name please"
+        // if (work.link_to_project == '') return 'Add link to project please'
+        // if (work.workdesc == '') return "Add description please"
+        // if (work.frameworks == '') return "Add frameworks please"
+        // const works = JSON.parse(localStorage.getItem('works') || '[]')
+        // works.push(work)
+        // localStorage.setItem('works', JSON.stringify(works))
+        try {
+            showLoading()
+            const { error, data, message } = await fetchData("/work", "POST", work)
+            if (message == 'success') return { message, data }
+            else return { error, message }
+        }
+        finally {
+            removeLoading()
+        }
     }
 
-    this.getWork = function (id) {
-        const works = JSON.parse(localStorage.getItem('works') || '[]')
-        return works.filter(work => work.id == id)[0] || {}
+
+    this.getWork = async function (id) {
+        // const works = JSON.parse(localStorage.getItem('works') || '[]')
+        // return works.filter(work => work.id == id)[0] || {}
+        try {
+            showLoading()
+            const { data, message } = await fetchData(`/works/${id}`, "GET")
+            if (message == 'success') return { message, data }
+            else return { error: true, message }
+        }
+        finally {
+            removeLoading()
+        }
     }
-    this.getAllWork = function () {
-        return JSON.parse(localStorage.getItem('works') || '[]')
+    this.getAllWork = async function () {
+        // return JSON.parse(localStorage.getItem('works') || '[]')
+        try {
+            showLoading()
+            const { length, message, data } = await fetchData("/works", "GET")
+            if (length <= 0) return { message, data: {} }
+            else return { data, message }
+        }
+        finally {
+            removeLoading()
+        }
     }
-    this.updateWork = function (id, object) {
-        const works = JSON.parse(localStorage.getItem('works') || '[]')
-        const index = works.findIndex(work => work.id == id)
-        Object.assign(works[index], object)
-        localStorage.setItem('works', JSON.stringify(works))
+    this.updateWork = async function (id, object) {
+        // const works = JSON.parse(localStorage.getItem('works') || '[]')
+        // const index = works.findIndex(work => work.id == id)
+        // Object.assign(works[index], object)
+        // localStorage.setItem('works', JSON.stringify(works))
+        try {
+            showLoading()
+            const { error, data, message } = await fetchData(`/works/${id}`, "PATCH", object)
+            if (!data) return { error: true, message: "Could not update this work" }
+            else return { message, data }
+        }
+        finally {
+            removeLoading()
+        }
+    }
+    this.deleteWork = async function (id) {
+        try {
+            showLoading()
+            const { error, data, message } = await fetchData(`/works/${id}`, "DELETE")
+            if (message != 'success') return { error: true, message: "Could not delete this work" }
+            else return { message, data }
+        }
+        finally {
+            removeLoading()
+        }
     }
 }
 

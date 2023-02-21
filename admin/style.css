@@ -41,6 +41,9 @@
   align-items: center;
   overflow-y: auto;
 }
+.menu {
+  display: none;
+}
 .title {
   position: absolute;
   width: 918.5px;
@@ -224,8 +227,8 @@
 }
 .profile {
   display: flex;
-  width: 100%;
-  padding-left: 95px;
+  /* width: 100%; */
+  /* padding-left: 95px; */
   align-items: center;
   padding-top: 50px;
 }
@@ -266,8 +269,8 @@
 .edit-details {
   width: 300px;
   height: auto;
-  align-self: flex-start;
-  margin-left: 94px;
+  /* align-self: flex-start; */
+  /* margin-left: 94px; */
   margin-top: 60px;
 }
 .edit-details p {
@@ -577,7 +580,15 @@
   line-height: 31px;
   color: var(--blue);
 }
-
+.mywork-desc {
+  width: 576px !important;
+  height: 240px;
+}
+.mywork-img {
+  width: 300px;
+  height: 240px;
+  margin-right: 25px;
+}
 .mywork-inputs {
   margin-top: 46px;
 }
@@ -619,6 +630,17 @@
   justify-content: space-around;
   height: 100%;
 }
+.blog-single-input {
+  margin-bottom: 0px;
+  width: 400px;
+  margin-top: 25px;
+}
+.blog-single-textarea {
+  width: 400px;
+  height: 256px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .edit-span {
   background: url("./edit.svg");
   background-repeat: no-repeat;
@@ -640,6 +662,9 @@
   align-items: center;
   margin-bottom: 14px; */
   border: none;
+}
+.edit-input:disabled {
+  color: #3a3a3a;
 }
 /* Error */
 .error-toast {
@@ -749,7 +774,7 @@
   bottom: auto;
   left: 0;
   right: 0;
-  z-index: 5;
+  z-index: 405;
 }
 
 @keyframes load-animate {
@@ -776,6 +801,18 @@
 /* Loading indicator end */
 .d-nonne {
   display: none !important;
+}
+.d-flex-colum {
+  display: flex !important;
+  flex-direction: column !important;
+}
+.d-flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.messages-main {
+  width: 914px !important;
 }
 
 .message-container {
@@ -858,6 +895,185 @@
   color: var(--blue);
   cursor: pointer;
   border: 2px solid var(--blue);
+}
+
+@media (max-width: 600px) {
+  .d-sm-none {
+    display: none !important;
+  }
+  .edit-pwd {
+    width: 100%;
+    height: 450px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .edit-pwd h6 {
+    left: auto;
+    align-self: center;
+    position: relative;
+    top: auto;
+    margin-top: 20px;
+  }
+  .inputs-edit {
+    left: auto;
+    width: 90%;
+    padding-left: 5%;
+    top: 100px;
+  }
+  .edit-input {
+    max-width: 90%;
+  }
+  .close {
+    right: 10px;
+    left: auto;
+  }
+  .container {
+    width: 100%;
+    margin-left: 0;
+  }
+  .nav {
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 70px;
+    z-index: 100;
+  }
+  .title {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    z-index: 400;
+  }
+  .menu {
+    display: block !important;
+  }
+  .menu button {
+    border: none;
+    border-radius: 5px;
+    background: var(--blue);
+  }
+  .title h3 {
+    width: auto;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .main {
+    width: 100%;
+    left: 0;
+    height: auto;
+    padding: 15px;
+    position: relative;
+    margin-top: 0px;
+  }
+  .blogs {
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: auto;
+    margin-top: 115px;
+  }
+  .profile {
+    padding-left: 0px;
+  }
+  .account-profile {
+    width: 80px;
+    height: 80px;
+    margin-right: auto;
+  }
+  .edit-details {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 30px;
+  }
+  /* About Page */
+  .about-img {
+    width: 100%;
+  }
+  .about-desc {
+    width: 100%;
+  }
+
+  /* Skills Page */
+  .skill-desc {
+    width: 100%;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  .skill-img {
+    margin-bottom: 25px;
+  }
+  .skill-details {
+    width: 100%;
+  }
+  .skill-header {
+    margin-top: 20px;
+  }
+  .skill-banner {
+    width: 100%;
+  }
+  /* My Work Page */
+  .mywork-desc {
+    width: 100% !important;
+    height: auto;
+  }
+  .mywork-img {
+    width: 80%;
+    margin-right: 0;
+  }
+  .mywork-details {
+    margin-bottom: 10px;
+  }
+  .mywork-inputs {
+    margin-top: 20px;
+  }
+  /* Blog Page */
+  .blog-top {
+    width: 100%;
+    flex-direction: column;
+  }
+  .blog-img {
+    margin-bottom: 20px;
+  }
+  .blog-inputs {
+    height: 100px;
+    justify-content: space-between;
+  }
+  .blog-single-input {
+    width: 100%;
+  }
+  .blog-single-textarea {
+    width: 100%;
+  }
+  /* Message Page */
+  .messages-main {
+    width: 100% !important;
+  }
+  .single-message {
+    padding: 5px 10px;
+    margin: 10px 0;
+  }
+  .message-part {
+    grid-template-columns: 1fr;
+  }
+  .message-respond {
+    margin-bottom: 5px;
+  }
+  .message-respond textarea {
+    height: 35px;
+    border-radius: 5px;
+  }
+  .message-respond button {
+    height: 35px;
+    width: 60px;
+  }
 }
 
 /* Custom scroll bar */

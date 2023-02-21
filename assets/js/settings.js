@@ -24,11 +24,15 @@ async function editUser(e) {
     const formData = new FormData(profileTab)
     const data = {}
     for (let [key, value] of formData.entries()) data[key] = value
-    if (data.photo instanceof File) data.photo = await uploadToFirebase(data.photo)
+    if (data.photo instanceof File) {
+        if (data.photo.size == 0) delete data.photo
+        else data.photo = await uploadToFirebase(data.photo)
+    }
 
     const res = await db.updateUser($id, data)
 
-    if (res.data) return successNotification("User updated successfully..")
+
+    if (res._id) return successNotification("User updated successfully..")
     else errorNotification(res)
 }
 
@@ -48,8 +52,8 @@ async function changePassword(e) {
 }
 
 
-// profileTab.addEventListener("submit", editUser)
-// passwordChangeTab.addEventListener('submit', changePassword)
+profileTab.addEventListener("submit", editUser)
+passwordChangeTab.addEventListener('submit', changePassword)
 
 // function showProfileTab() {
 //     profileTab.classList.remove('d-nonne')
@@ -77,9 +81,19 @@ document.querySelector(".setting-add-img")
         document.getElementsByName("photo")[0].click()
         console.log("click")
     })
+document.getElementsByName('email')[0].disabled = true
+document.getElementsByName('phone')[0].disabled = true
+
+document.getElementsByName('email')[0].addEventListener('click', () => {
+    document.getElementsByName('email')[0].disabled = false
+})
+
+document.getElementsByName('phone')[0].addEventListener('click', () => {
+    document.getElementsByName('phone')[0].disabled = false
+})
 
 document.getElementsByName('names')[0].value = user.names
 document.getElementsByName('email')[0].value = user.email
 document.getElementsByName('phone')[0].value = user.phone
-document.getElementsByName('dob')[0].value = `${new Date(user?.dob).getFullYear()}-${new Date(user?.dob).getMonth() + 1}-0${new Date(user?.dob).getDay()}`
+document.getElementsByName('dob')[0].value = new Date(user?.dob).toISOString().split("T")[0]
 document.getElementById('settings-user-img').src = user.photo

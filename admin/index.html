@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -61,7 +62,7 @@
         </div>
     </div>
     <div class="container">
-        <nav class="nav">
+        <nav class="nav d-sm-none">
             <div class="avatar">
                 <img src="./../assets/img/avatar-admin.png" alt="avatar" id="profile-pic">
             </div>
@@ -146,10 +147,13 @@
             </ul>
         </nav>
         <div class="title">
+            <div class="menu"><button id="menu-btn"><i class="bx bx-menu bx-md" style="color: white;"
+                        id="bx-icon"></i></button>
+            </div>
             <h3>CYUSA / DASHBOARD</h3>
         </div>
 
-        <form id="account" class="main">
+        <form id="account" class="main messages-main">
             <h6>Edit Account</h6>
             <div class="profile">
                 <input type="file" name="photo" id="profile" class="d-none" accept="image/*" />
@@ -208,7 +212,7 @@
         </form>
 
 
-        <div class="blogs">
+        <div class="blogs d-none">
             <div class="popular">
                 <div class="header-underlined">
                     <h1>Messages</h1>
@@ -236,6 +240,7 @@
 
     </div>
     <div class="toast-container"></div>
+    <script src="../assets/js/dashboard.js"></script>
     <script src="./index.js" type="module"></script>
 </body>
 

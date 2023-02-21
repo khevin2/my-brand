@@ -41,7 +41,7 @@ async function handleRegitserSubmit(e) {
     }
     data.photo = await uploadToFirebase(data.photo)
     const res = await db.saveUser(data)
-    if (res != 'success') return errorNotification(res)
+    if (res.message != 'success') return errorNotification(res)
     else successNotification("User saved..")
 }
 

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Skills</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -63,7 +64,7 @@
         </div>
     </div>
     <div class="container">
-        <nav class="nav">
+        <nav class="nav d-sm-none">
             <div class="avatar">
                 <img src="./../assets/img/avatar-admin.png" alt="avatar">
             </div>
@@ -148,6 +149,9 @@
             </ul>
         </nav>
         <div class="title">
+            <div class="menu"><button id="menu-btn"><i class="bx bx-menu bx-md" style="color: white;"
+                        id="bx-icon"></i></button>
+            </div>
             <h3>CYUSA / SKILLS</h3>
         </div>
         <form id="skills-form" class="main">
@@ -213,6 +217,7 @@
 
     </div>
     <div class="toast-container"></div>
+    <script src="../assets/js/dashboard.js"></script>
     <script src="./index.js" type="module"></script>
     <script src="./../helpers/display_data.js" type="module"></script>
 </body>
