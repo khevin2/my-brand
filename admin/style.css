@@ -227,8 +227,8 @@
 }
 .profile {
   display: flex;
-  width: 100%;
-  padding-left: 95px;
+  /* width: 100%; */
+  /* padding-left: 95px; */
   align-items: center;
   padding-top: 50px;
 }
@@ -269,8 +269,8 @@
 .edit-details {
   width: 300px;
   height: auto;
-  align-self: flex-start;
-  margin-left: 94px;
+  /* align-self: flex-start; */
+  /* margin-left: 94px; */
   margin-top: 60px;
 }
 .edit-details p {
@@ -663,6 +663,9 @@
   margin-bottom: 14px; */
   border: none;
 }
+.edit-input:disabled {
+  color: #3a3a3a;
+}
 /* Error */
 .error-toast {
   width: 80%;
@@ -799,6 +802,14 @@
 .d-nonne {
   display: none !important;
 }
+.d-flex-colum {
+  display: flex !important;
+  flex-direction: column !important;
+}
+.d-flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+}
 
 .messages-main {
   width: 914px !important;
@@ -910,6 +921,9 @@
     width: 90%;
     padding-left: 5%;
     top: 100px;
+  }
+  .edit-input {
+    max-width: 90%;
   }
   .close {
     right: 10px;

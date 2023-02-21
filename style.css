@@ -860,6 +860,7 @@ body {
     padding-left: 20px;
     padding-top: 40px;
     justify-content: flex-start;
+    z-index: 500;
   }
   .d-none {
     display: none;

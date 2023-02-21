@@ -11,7 +11,8 @@ if (document.getElementById('client-about')) {
 
 if (document.getElementById('client-skills')) {
     const save = new SaveSkills()
-    const skills = save.getAllSkills()
+    const res = await save.getAllSkills()
+    const skills = res.data
     let data = ''
     if (skills.length <= 0) data = "<h4 class='h4'> Skills will appear here..</h4>"
     else
@@ -31,7 +32,9 @@ if (document.getElementById('client-skills')) {
 }
 if (document.getElementById('client-mywork')) {
     const save = new SaveWork()
-    const works = save.getAllWork()
+    const res = await save.getAllWork()
+    const works = res.data
+
     let data = ''
     if (works.length <= 0) data = "<h4 class='h4'> Works will appear here..</h4>"
     else
@@ -59,7 +62,7 @@ if (document.getElementById('client-mywork')) {
                         </span>
                     </div>
                 </div>
-                <img src="${work.myworkimg}" alt="">
+                <img src="${work.workimg}" alt="">
             </div>`
         }
     document.getElementById('client-mywork').innerHTML = data
@@ -105,11 +108,14 @@ if (document.getElementById('client-popular-blogs')) {
     for (let blog of blogs) {
         const divElement = document.createElement('div')
         divElement.classList.add('popular-article')
+        const anchor = document.createElement('a')
+        anchor.href = `/blog_view.html?id=${blog._id}`
         const h5 = document.createElement('h5')
         h5.innerText = blog.title
         const p = document.createElement('p')
         p.innerText = blog.intro
-        divElement.append(h5, p)
+        anchor.append(h5)
+        divElement.append(anchor, p)
         document.getElementById('client-popular-blogs').append(divElement)
     }
     console.log('fire')
@@ -146,12 +152,13 @@ if (document.getElementById('comments-container')) {
 
 if (document.getElementById('skills-list-dashboard')) {
     const db = new SaveSkills()
-    const skills = db.getAllSkills()
+    const res = await db.getAllSkills()
+    const skills = res.data
     let data = ''
     if (skills.length <= 0) data = '<h4 class="h4"> Skills will appear here!</h4>'
     for (let skill of skills) {
         data += `<div class="popular-article">
-                    <a href='./skills.html?id=${skill.id}'><h5>${skill.skillname}</h5></a>
+                    <a href='./skills.html?id=${skill._id}'><h5>${skill.skillname}</h5></a>
                     <p>${skill.skilldesc}</p>
                 </div>`
     }
@@ -168,11 +175,12 @@ if (document.getElementById('skills-form')) {
     const skillID = params.get('id')
     // debugger
     if (skillID != null) {
-        const { skilldesc, skillname, skillphoto, bannerphoto } = db.getSkill(skillID)
+        const res = await db.getSkill(skillID)
+        const { skilldesc, skillname, skillphoto, skillbanner } = res.data
         document.getElementById('dash-skill-photo').src = skillphoto
         document.getElementById('dash-skill-name').value = skillname
         document.getElementById('dash-skill-desc').value = skilldesc
-        document.getElementById('dash-skill-banner').src = bannerphoto
+        document.getElementById('dash-skill-banner').src = skillbanner
     }
 }
 
@@ -182,12 +190,13 @@ if (document.getElementById('skills-form')) {
 
 if (document.getElementById('mywork-list-dashboard')) {
     const db = new SaveWork()
-    const works = db.getAllWork()
+    const res = await db.getAllWork()
+    const works = res.data
     let data = ''
     if (works.length <= 0) data = '<h4 class="h4"> My work will appear here!</h4>'
     for (let work of works) {
         data += `<div class="popular-article">
-                    <a href='./mywork.html?id=${work.id}'><h5>${work.workname}</h5></a>
+                    <a href='./mywork.html?id=${work._id}'><h5>${work.workname}</h5></a>
                     <p>${work.workdesc}</p>
                 </div>`
     }
@@ -204,8 +213,9 @@ if (document.getElementById('mywork-form')) {
     const workID = params.get('id')
     // debugger
     if (workID != null) {
-        const { myworkimg, workname, workdesc, frameworks, link_to_project } = db.getWork(workID)
-        document.getElementById('dash-mywork-photo').src = myworkimg
+        const res = await db.getWork(workID)
+        const { workimg, workname, workdesc, frameworks, link_to_project } = res.data
+        document.getElementById('dash-mywork-photo').src = workimg
         document.getElementById('dash-mywork-name').value = workname
         document.getElementById('dash-mywork-desc').value = workdesc
         document.getElementById('project-link').value = link_to_project

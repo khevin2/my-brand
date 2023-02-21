@@ -31,7 +31,7 @@ export function validateAbout(data, form) {
     return error
 }
 
-export function validateSkills(data, form) {
+export function validateSkills(data) {
     let error = false
     if (data.skillname == '') {
         error = true
@@ -79,6 +79,14 @@ export function validateWork(data, form) {
     if (data.workdesc.length < 10) {
         error = true
         errorNotification('Work description is too short..')
+    }
+    if (!data.frameworks instanceof Array) {
+        error = true
+        errorNotification('Work frameworks should be an array..')
+    }
+    if (data.frameworks.length == 0) {
+        error = true
+        errorNotification('Work frameworks should not be empty..')
     }
     return error
 }

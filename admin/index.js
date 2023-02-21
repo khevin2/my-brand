@@ -56,6 +56,7 @@ async function handleAccountForm(e) {
     const form = new FormData(accountForm)
     const data = {}
     for (let [key, value] of form.entries()) data[key] = value
+    if (data.photo.size == 0) delete data.photo
     if (data.photo instanceof File) data.photo = await uploadToFirebase(data.photo)
     const res = await save.updateUser($id, data)
     console.log(res)
@@ -64,6 +65,23 @@ async function handleAccountForm(e) {
     else errorNotification(res)
 
 }
+if (accountForm) {
+    let emailState = true
+    let phoneState = true
+    document.getElementsByName('email')[0].disabled = emailState
+    document.getElementsByName('phone')[0].disabled = phoneState
+
+    document.getElementsByName('email')[0].nextElementSibling.addEventListener('click', () => {
+        document.getElementsByName('email')[0].disabled = !emailState
+        emailState = !emailState
+    })
+
+    document.getElementsByName('phone')[0].nextElementSibling.addEventListener('click', () => {
+        document.getElementsByName('phone')[0].disabled = !phoneState
+        phoneState = !phoneState
+    })
+}
+
 if (document.querySelector('.account-profile'))
     document.querySelector('.account-profile').addEventListener('click', openFileChooser)
 function openFileChooser(e) {
@@ -95,8 +113,7 @@ if (pwdform) {
     document.getElementsByName('names')[0].value = user.names
     document.getElementsByName('phone')[0].value = user.phone
     document.getElementsByClassName('account-profile')[0].src = user.photo
-    console.log(user, "\n", new Date(user.dob))
-    document.getElementsByName('dob')[0].value = `${new Date(user?.dob).getFullYear()}-0${new Date(user?.dob).getMonth() + 1}-0${new Date(user?.dob).getDay()}`
+    document.getElementsByName('dob')[0].value = new Date(user?.dob).toISOString().split("T")[0]
 }
 
 /**
@@ -132,23 +149,31 @@ if (skillsform) {
     async function handleSkillsSubmit(e) {
         console.log('skills saving')
         e.preventDefault()
+
         const data = {}
         const formData = new FormData(skillsform)
         for (let [key, value] of formData.entries()) data[key] = value
+
+        if (validateSkills(data)) return
+
         if (data.skillphoto instanceof File) data.skillphoto = await uploadToFirebase(data.skillphoto)
         if (data.bannerphoto instanceof File) data.bannerphoto = await uploadToFirebase(data.bannerphoto)
-        debugger
-        console.log(data)
-        if (validateSkills(data, skillsform)) return
+
+        data.skillbanner = data.bannerphoto
+        delete data.bannerphoto
+
         const params = new URLSearchParams(window.location.search) // Get parameters from search params
         const skillID = params.get('id')
+
+
         if (skillID) {
-            skillssave.updateSkill(skillID, data)
-            successNotification("Saved")
+            const res = await skillssave.updateSkill(skillID, data)
+            if (res.data) successNotification("Saved")
+            else return errorNotification(res.message)
         } else {
-            data.id = generateID()
-            skillssave.SaveSkill(data)
-            successNotification("Saved")
+            const res = await skillssave.SaveSkill(data)
+            if (res.data) successNotification("Saved")
+            else return errorNotification("Unable to save new skill..")
         }
         skillsform.reset()
 
@@ -172,12 +197,27 @@ if (myworkform) {
     async function handleMyWork(e) {
         e.preventDefault()
         const formData = new FormData(myworkform)
+
+
         const data = {}
         for (let [key, value] of formData.entries()) data[key] = value
         if (data.myworkimg instanceof File) data.myworkimg = await uploadToFirebase(data.myworkimg)
+
+        data.workimg = data.myworkimg
+
+        delete data.myworkimg
+
+
+        data.frameworks = data.frameworks.split(',')
+        data.frameworks = data.frameworks.map(framework => framework.trim())
+
+
         if (validateWork(data, myworkform)) return
+
         const params = new URLSearchParams(window.location.search) // Get parameters from search params
         const workID = params.get('id')
+
+
         if (workID) {
             worksave.updateWork(workID, data)
             successNotification("Saved")
